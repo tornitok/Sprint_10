@@ -62,3 +62,69 @@ class TestRouteDrawing:
             markers_count = main_page.get_map_markers_count()
             assert markers_count >= 2, \
                 f"На карте должно быть минимум 2 точки (начало и конец маршрута), найдено: {markers_count}"
+
+
+@allure.feature('Построение маршрута')
+@allure.story('Отрисовка блока с выбором маршрута')
+class TestRouteSelectionBlock:
+    """
+    Тесты для проверки отображения блока выбора маршрута
+    """
+
+    @allure.title('Отображение блока выбора маршрута при разных адресах')
+    @allure.description(
+        'Проверка отображения блока с выбором маршрута '
+        'при вводе двух разных предустановленных адресов'
+    )
+    def test_route_selection_block_with_different_addresses(self, driver):
+        with allure.step('Открыть главную страницу'):
+            main_page = MainPage(driver)
+
+        with allure.step('Проверить, что карта видна'):
+            assert main_page.is_map_visible(), "Карта не отображается на странице"
+
+        with allure.step('Ввести адрес начала маршрута: Хамовнический вал, 34'):
+            main_page.enter_from_address(MainPage.ADDRESS_HAMOVNICHESKY)
+
+        with allure.step('Ввести адрес конца маршрута: Зубовский бульвар, 37'):
+            main_page.enter_to_address(MainPage.ADDRESS_ZUBOVSKY)
+
+        with allure.step('Дождаться появления блока выбора маршрута'):
+            block_visible = main_page.wait_for_route_selection_block(timeout=10)
+            assert block_visible, "Блок выбора маршрута не появился в течение 10 секунд"
+
+        with allure.step('Проверить, что блок выбора маршрута отображается'):
+            assert main_page.is_route_selection_block_visible(), \
+                "Блок выбора маршрута должен отображаться при вводе разных адресов"
+
+    @allure.title('Отображение блока выбора маршрута при одинаковых адресах')
+    @allure.description(
+        'Проверка отображения блока с выбором маршрута с текстом "Авто Бесплатно В пути 0 мин." '
+        'при вводе одинакового адреса в оба поля'
+    )
+    def test_route_selection_block_with_same_address(self, driver):
+        with allure.step('Открыть главную страницу'):
+            main_page = MainPage(driver)
+
+        with allure.step('Проверить, что карта видна'):
+            assert main_page.is_map_visible(), "Карта не отображается на странице"
+
+        with allure.step('Ввести одинаковый адрес в поля "Откуда" и "Куда": Хамовнический вал, 34'):
+            main_page.enter_from_address(MainPage.ADDRESS_HAMOVNICHESKY)
+            main_page.enter_to_address(MainPage.ADDRESS_HAMOVNICHESKY)
+
+        with allure.step('Дождаться появления блока выбора маршрута'):
+            block_visible = main_page.wait_for_route_selection_block(timeout=10)
+            assert block_visible, "Блок выбора маршрута не появился в течение 10 секунд"
+
+        with allure.step('Проверить, что блок выбора маршрута отображается'):
+            assert main_page.is_route_selection_block_visible(), \
+                "Блок выбора маршрута должен отображаться при вводе одинаковых адресов"
+
+        with allure.step('Получить текст блока выбора маршрута'):
+            block_text = main_page.get_route_selection_block_text()
+
+        with allure.step('Проверить, что блок содержит текст "Авто Бесплатно В пути 0 мин."'):
+            expected_text = "Авто Бесплатно В пути 0 мин."
+            assert expected_text in block_text, \
+                f'Блок должен содержать текст "{expected_text}", получено: "{block_text}"'

@@ -4,10 +4,7 @@ Page Object для главной страницы сервиса EZ Route.
 from base_object.base_object import BaseObject
 from locators.main_page_locators import MainPageLocators
 from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.keys import Keys
 
 
 class MainPage(BaseObject):
@@ -55,11 +52,8 @@ class MainPage(BaseObject):
 
         :return: True если карта видна
         """
-        try:
-            self._is_visible(self.locators.MAP_CONTAINER)
-            return True
-        except TimeoutException:
-            return False
+        self._is_visible(self.locators.MAP_CONTAINER)
+        return True
 
     def get_route_points_count(self) -> int:
         """
@@ -67,11 +61,7 @@ class MainPage(BaseObject):
 
         :return: количество точек маршрута
         """
-        try:
-            return self.get_elements_count(self.locators.ROUTE_POINTS)
-        except TimeoutException:
-            # Пробуем альтернативный локатор
-            return self.get_elements_count(self.locators.MAP_MARKERS)
+        return self.get_elements_count(self.locators.ROUTE_POINTS)
 
     def get_map_markers_count(self) -> int:
         """
@@ -87,11 +77,8 @@ class MainPage(BaseObject):
 
         :return: True если точка начала видна
         """
-        try:
-            self._is_visible(self.locators.ROUTE_START_POINT)
-            return True
-        except TimeoutException:
-            return False
+        self._is_visible(self.locators.ROUTE_START_POINT)
+        return True
 
     def is_route_end_point_visible(self) -> bool:
         """
@@ -99,11 +86,8 @@ class MainPage(BaseObject):
 
         :return: True если точка конца видна
         """
-        try:
-            self._is_visible(self.locators.ROUTE_END_POINT)
-            return True
-        except TimeoutException:
-            return False
+        self._is_visible(self.locators.ROUTE_END_POINT)
+        return True
 
     def are_both_route_points_visible(self) -> bool:
         """
@@ -119,11 +103,8 @@ class MainPage(BaseObject):
 
         :return: True если линия маршрута видна
         """
-        try:
-            self._is_visible(self.locators.ROUTE_LINE)
-            return True
-        except TimeoutException:
-            return False
+        self._is_visible(self.locators.ROUTE_LINE)
+        return True
 
     def wait_for_route_to_display(self, timeout: int = 10) -> bool:
         """
@@ -132,11 +113,29 @@ class MainPage(BaseObject):
         :param timeout: время ожидания в секундах
         :return: True если маршрут отобразился
         """
-        try:
-            wait = WebDriverWait(self.driver, timeout)
-            # Ждем появления хотя бы двух маркеров на карте
-            wait.until(lambda d: len(d.find_elements(*self.locators.MAP_MARKERS)) >= 2)
-            return True
-        except TimeoutException:
-            return False
+        return self.wait_for_elements_count(self.locators.MAP_MARKERS, min_count=2, timeout=timeout)
+
+    def is_route_selection_block_visible(self) -> bool:
+        """
+        Проверка видимости блока выбора маршрута
+
+        :return: True если блок выбора маршрута видим
+        """
+        self._is_visible(self.locators.ROUTE_SELECTION_BLOCK)
+        return True
+
+    def get_route_selection_block_text(self) -> str:
+        """
+        Получение текста из блока выбора маршрута
+
+        :return: текст блока выбора маршрута
+        """
+        element = self._is_visible(self.locators.ROUTE_SELECTION_BLOCK)
+        return " ".join(element.text.split())
+
+    def wait_for_route_selection_block(self, timeout: int = 10) -> bool:
+        return self.wait_for_condition(
+            EC.visibility_of_element_located(self.locators.ROUTE_SELECTION_BLOCK),
+            timeout=timeout
+        )
 

@@ -127,3 +127,14 @@ class BaseObject:
     def is_sorted_descending(values: list) -> bool:
         normalized = [v.lower() for v in values]
         return normalized == sorted(normalized, reverse=True)
+
+    def wait_for_condition(self, condition, timeout: int = 10) -> bool:
+        wait = WebDriverWait(self.driver, timeout)
+        wait.until(condition)
+        return True
+
+    def wait_for_elements_count(self, locator: tuple[str, str], min_count: int, timeout: int = 10) -> bool:
+        wait = WebDriverWait(self.driver, timeout)
+        wait.until(lambda d: len(d.find_elements(*locator)) >= min_count)
+        return True
+

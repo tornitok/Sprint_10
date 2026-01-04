@@ -25,3 +25,7 @@ class MainPageLocators:
     MAP_MARKERS = (By.CSS_SELECTOR, ".leaflet-marker-icon, .map-marker, [class*='marker']")
     ROUTE_POINTS = (By.CSS_SELECTOR, "[class*='route-point'], [class*='waypoint']")
 
+    # Блок выбора маршрута
+    ROUTE_SELECTION_BLOCK = (By.XPATH, "//div[@class='results-text']")
+    ROUTE_INFO_TEXT = (By.CSS_SELECTOR, ".route-selection *, .route-info *, [class*='route-select'] *, [class*='route-info'] *")
+
