@@ -1,0 +1,3 @@
+class URL:
+    BASE_URL = 'https://ez-route.stand.praktikum-services.ru'
+
