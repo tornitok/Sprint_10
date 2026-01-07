@@ -5,22 +5,22 @@ from webdriver_manager.chrome import ChromeDriverManager
 from config import URL
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope="function")
 def driver():
-    """
-    Фикстура для инициализации Chrome драйвера.
-    Автоматически устанавливает и настраивает ChromeDriver.
-    """
-    # Опции Chrome для стабильной работы
     chrome_options = webdriver.ChromeOptions()
-    # chrome_options.add_argument('--headless')  # Раскомментировать для headless режима
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--disable-dev-shm-usage')
-    chrome_options.add_argument('--window-size=1920,1080')
+    # chrome_options.add_argument("--headless=new")  # при необходимости
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--window-size=1920,1080")
 
-    # Автоматическая установка ChromeDriver через webdriver-manager
-    service = Service(ChromeDriverManager().install())
-    browser = webdriver.Chrome(service=service, options=chrome_options)
+    service = Service(
+        ChromeDriverManager().install()
+    )
+
+    browser = webdriver.Chrome(
+        service=service,
+        options=chrome_options
+    )
 
     browser.get(URL.BASE_URL)
     browser.implicitly_wait(10)
@@ -28,4 +28,3 @@ def driver():
     yield browser
 
     browser.quit()
-
