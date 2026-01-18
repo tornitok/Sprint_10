@@ -1,201 +1,203 @@
+"""Page Object для страницы маршрута с опциями маршрута."""
+
 import allure
 from pages.base_object import BaseObject
 from locators.route_page_locators import RoutePageLocators
 
 
 class RoutePage(BaseObject):
-    """Page Object for the Route Page with route options."""
+    """Page Object для страницы маршрута с опциями маршрута."""
 
-    @allure.step("Check if route options block is displayed")
+    @allure.step("Проверка отображения блока выбора маршрута")
     def is_route_options_displayed(self) -> bool:
-        """Verify if route options block is visible."""
+        """Проверка видимости блока выбора маршрута."""
         return self.is_element_visible(RoutePageLocators.ROUTE_OPTIONS_BLOCK)
 
-    @allure.step("Get route distance")
+    @allure.step("Получение расстояния маршрута")
     def get_route_distance(self) -> str:
-        """Get the displayed route distance."""
+        """Получение отображаемого расстояния маршрута."""
         return self.get_text(RoutePageLocators.ROUTE_DISTANCE)
 
-    @allure.step("Get route duration")
+    @allure.step("Получение времени в пути")
     def get_route_duration(self) -> str:
-        """Get the displayed route duration."""
+        """Получение отображаемого времени маршрута."""
         return self.get_text(RoutePageLocators.ROUTE_DURATION)
 
-    @allure.step("Select walking mode")
+    @allure.step("Выбор режима Пешком")
     def select_walking_mode(self) -> None:
-        """Select walking as the route mode."""
+        """Выбор пешего режима маршрута."""
         self.click(RoutePageLocators.WALKING_MODE)
 
-    @allure.step("Select driving mode")
+    @allure.step("Выбор режима На машине")
     def select_driving_mode(self) -> None:
-        """Select driving as the route mode."""
+        """Выбор режима маршрута на машине."""
         self.click(RoutePageLocators.DRIVING_MODE)
 
-    @allure.step("Select transit mode")
+    @allure.step("Выбор режима Транспорт")
     def select_transit_mode(self) -> None:
-        """Select transit as the route mode."""
+        """Выбор режима общественного транспорта."""
         self.click(RoutePageLocators.TRANSIT_MODE)
 
-    @allure.step("Hover over route options")
+    @allure.step("Наведение на блок выбора маршрута")
     def hover_over_route_options(self) -> None:
-        """Hover over the route options block."""
+        """Наведение на блок выбора маршрута."""
         self.hover(RoutePageLocators.ROUTE_OPTIONS_BLOCK)
 
-    # Route Type Tab Methods
-    @allure.step("Select Optimal route tab")
+    # Методы работы с видами маршрута
+    @allure.step("Выбор маршрута Оптимальный")
     def select_optimal_route(self) -> None:
-        """Select the Optimal route type tab."""
+        """Выбор вида маршрута Оптимальный."""
         self.click(RoutePageLocators.OPTIMAL_TAB)
 
-    @allure.step("Select Fast route tab")
+    @allure.step("Выбор маршрута Быстрый")
     def select_fast_route(self) -> None:
-        """Select the Fast route type tab."""
+        """Выбор вида маршрута Быстрый."""
         self.click(RoutePageLocators.FAST_TAB)
 
-    @allure.step("Select Custom route tab")
+    @allure.step("Выбор маршрута Свой")
     def select_custom_route(self) -> None:
-        """Select the Custom route type tab."""
+        """Выбор вида маршрута Свой."""
         self.click(RoutePageLocators.CUSTOM_TAB)
 
-    @allure.step("Get active route tab text")
+    @allure.step("Получение текста активного таба маршрута")
     def get_active_route_tab_text(self) -> str:
-        """Get the text of the currently active route tab."""
+        """Получение текста текущего активного таба маршрута."""
         return self.get_text(RoutePageLocators.ACTIVE_ROUTE_TAB)
 
-    @allure.step("Check if Optimal tab is active")
+    @allure.step("Проверка активности таба Оптимальный")
     def is_optimal_tab_active(self) -> bool:
-        """Check if Optimal route tab is active."""
+        """Проверка активности таба Оптимальный."""
         element = self.find_element(RoutePageLocators.OPTIMAL_TAB)
         return "active" in element.get_attribute("class")
 
-    @allure.step("Check if Fast tab is active")
+    @allure.step("Проверка активности таба Быстрый")
     def is_fast_tab_active(self) -> bool:
-        """Check if Fast route tab is active."""
+        """Проверка активности таба Быстрый."""
         element = self.find_element(RoutePageLocators.FAST_TAB)
         return "active" in element.get_attribute("class")
 
-    @allure.step("Check if Custom tab is active")
+    @allure.step("Проверка активности таба Свой")
     def is_custom_tab_active(self) -> bool:
-        """Check if Custom route tab is active."""
+        """Проверка активности таба Свой."""
         element = self.find_element(RoutePageLocators.CUSTOM_TAB)
         return "active" in element.get_attribute("class")
 
-    # Transport Type Methods
-    @allure.step("Select Car transport")
+    # Методы работы с типами передвижения
+    @allure.step("Выбор типа передвижения Машина")
     def select_car_transport(self) -> None:
-        """Select Car as transport type."""
+        """Выбор типа передвижения Машина."""
         self.click(RoutePageLocators.CAR_TRANSPORT)
 
-    @allure.step("Select Walking transport")
+    @allure.step("Выбор типа передвижения Пешком")
     def select_walking_transport(self) -> None:
-        """Select Walking as transport type."""
+        """Выбор типа передвижения Пешком."""
         self.click(RoutePageLocators.WALKING_TRANSPORT)
 
-    @allure.step("Select Taxi transport")
+    @allure.step("Выбор типа передвижения Такси")
     def select_taxi_transport(self) -> None:
-        """Select Taxi as transport type."""
+        """Выбор типа передвижения Такси."""
         self.click(RoutePageLocators.TAXI_TRANSPORT)
 
-    @allure.step("Select Bicycle transport")
+    @allure.step("Выбор типа передвижения Велосипед")
     def select_bicycle_transport(self) -> None:
-        """Select Bicycle as transport type."""
+        """Выбор типа передвижения Велосипед."""
         self.click(RoutePageLocators.BICYCLE_TRANSPORT)
 
-    @allure.step("Select Scooter transport")
+    @allure.step("Выбор типа передвижения Самокат")
     def select_scooter_transport(self) -> None:
-        """Select Scooter as transport type."""
+        """Выбор типа передвижения Самокат."""
         self.click(RoutePageLocators.SCOOTER_TRANSPORT)
 
-    @allure.step("Select Drive transport")
+    @allure.step("Выбор типа передвижения Драйв")
     def select_drive_transport(self) -> None:
-        """Select Drive as transport type."""
+        """Выбор типа передвижения Драйв."""
         self.click(RoutePageLocators.DRIVE_TRANSPORT)
 
-    @allure.step("Check if transport selector is displayed")
+    @allure.step("Проверка отображения селектора типов передвижения")
     def is_transport_selector_displayed(self) -> bool:
-        """Check if transport type selector is visible."""
+        """Проверка видимости селектора типов передвижения."""
         return self.is_element_visible(RoutePageLocators.TRANSPORT_TYPE_SELECTOR)
 
-    @allure.step("Check if Car transport is active")
+    @allure.step("Проверка видимости типа Машина")
     def is_car_transport_active(self) -> bool:
-        """Check if Car transport is active."""
+        """Проверка видимости типа передвижения Машина."""
         return self.is_element_visible(RoutePageLocators.CAR_TRANSPORT)
 
-    @allure.step("Check if Walking transport is active")
+    @allure.step("Проверка видимости типа Пешком")
     def is_walking_transport_visible(self) -> bool:
-        """Check if Walking transport option is visible."""
+        """Проверка видимости типа передвижения Пешком."""
         return self.is_element_visible(RoutePageLocators.WALKING_TRANSPORT)
 
-    @allure.step("Check if Taxi transport is visible")
+    @allure.step("Проверка видимости типа Такси")
     def is_taxi_transport_visible(self) -> bool:
-        """Check if Taxi transport option is visible."""
+        """Проверка видимости типа передвижения Такси."""
         return self.is_element_visible(RoutePageLocators.TAXI_TRANSPORT)
 
-    @allure.step("Check if Bicycle transport is visible")
+    @allure.step("Проверка видимости типа Велосипед")
     def is_bicycle_transport_visible(self) -> bool:
-        """Check if Bicycle transport option is visible."""
+        """Проверка видимости типа передвижения Велосипед."""
         return self.is_element_visible(RoutePageLocators.BICYCLE_TRANSPORT)
 
-    @allure.step("Check if Scooter transport is visible")
+    @allure.step("Проверка видимости типа Самокат")
     def is_scooter_transport_visible(self) -> bool:
-        """Check if Scooter transport option is visible."""
+        """Проверка видимости типа передвижения Самокат."""
         return self.is_element_visible(RoutePageLocators.SCOOTER_TRANSPORT)
 
-    @allure.step("Check if Drive transport is visible")
+    @allure.step("Проверка видимости типа Драйв")
     def is_drive_transport_visible(self) -> bool:
-        """Check if Drive transport option is visible."""
+        """Проверка видимости типа передвижения Драйв."""
         return self.is_element_visible(RoutePageLocators.DRIVE_TRANSPORT)
 
-    # Button Methods
-    @allure.step("Check if Call Taxi button is displayed")
+    # Методы работы с кнопками
+    @allure.step("Проверка отображения кнопки Вызвать такси")
     def is_call_taxi_button_displayed(self) -> bool:
-        """Check if Call Taxi button is visible."""
+        """Проверка видимости кнопки Вызвать такси."""
         return self.is_element_visible(RoutePageLocators.CALL_TAXI_BUTTON)
 
-    @allure.step("Check if Call Taxi button is enabled")
+    @allure.step("Проверка активности кнопки Вызвать такси")
     def is_call_taxi_button_enabled(self) -> bool:
-        """Check if Call Taxi button is enabled."""
+        """Проверка активности кнопки Вызвать такси."""
         element = self.find_element(RoutePageLocators.CALL_TAXI_BUTTON)
         return element.is_enabled()
 
-    @allure.step("Click Call Taxi button")
+    @allure.step("Клик по кнопке Вызвать такси")
     def click_call_taxi(self) -> None:
-        """Click the Call Taxi button."""
+        """Клик по кнопке Вызвать такси."""
         self.click(RoutePageLocators.CALL_TAXI_BUTTON)
 
-    @allure.step("Check if Book button is displayed")
+    @allure.step("Проверка отображения кнопки Забронировать")
     def is_book_button_displayed(self) -> bool:
-        """Check if Book button is visible."""
+        """Проверка видимости кнопки Забронировать."""
         return self.is_element_visible(RoutePageLocators.BOOK_BUTTON)
 
-    @allure.step("Check if Book button is enabled")
+    @allure.step("Проверка активности кнопки Забронировать")
     def is_book_button_enabled(self) -> bool:
-        """Check if Book button is enabled."""
+        """Проверка активности кнопки Забронировать."""
         element = self.find_element(RoutePageLocators.BOOK_BUTTON)
         return element.is_enabled()
 
-    @allure.step("Click Book button")
+    @allure.step("Клик по кнопке Забронировать")
     def click_book(self) -> None:
-        """Click the Book button."""
+        """Клик по кнопке Забронировать."""
         self.click(RoutePageLocators.BOOK_BUTTON)
 
-    # Cost and Time Methods
-    @allure.step("Get route cost")
+    # Методы получения стоимости и времени
+    @allure.step("Получение стоимости маршрута")
     def get_route_cost(self) -> str:
-        """Get the displayed route cost."""
+        """Получение отображаемой стоимости маршрута."""
         return self.get_text(RoutePageLocators.ROUTE_COST)
 
-    @allure.step("Get route travel time")
+    @allure.step("Получение времени в пути")
     def get_route_travel_time(self) -> str:
-        """Get the displayed travel time."""
+        """Получение отображаемого времени в пути."""
         return self.get_text(RoutePageLocators.ROUTE_TRAVEL_TIME)
 
-    @allure.step("Get route type text")
+    @allure.step("Получение текста типа маршрута")
     def get_route_type_text(self) -> str:
-        """Get the route type text."""
+        """Получение текста типа маршрута."""
         return self.get_text(RoutePageLocators.ROUTE_TYPE_TEXT)
 
-    @allure.step("Get cost text")
+    @allure.step("Получение текста стоимости")
     def get_cost_text(self) -> str:
-        """Get the cost text."""
+        """Получение текста стоимости."""
         return self.get_text(RoutePageLocators.COST_TEXT)

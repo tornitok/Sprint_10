@@ -1,130 +1,131 @@
+"""Тесты на функциональность 'Отрисовка блока с выбором маршрута'."""
+
 import allure
-import pytest
 from pages.main_page import MainPage
 from pages.route_page import RoutePage
 from test_data.addresses import Addresses, ExpectedTexts
 
 
-@allure.feature("Route Options")
-@allure.story("Route options block functionality")
+@allure.feature("Блок выбора маршрута")
+@allure.story("Функциональность блока выбора маршрута")
 class TestRouteOptionsBlock:
-    """Test class for route options block functionality.
+    """Класс тестов для функциональности блока выбора маршрута.
 
-    Test Scenario 2: Route Options Block Rendering
+    Тестовый сценарий 2: Отрисовка блока с выбором маршрута
     """
 
-    @allure.title("Scenario A: Verify route options displayed with different addresses")
+    @allure.title("Сценарий А: Проверка отображения блока выбора маршрута при разных адресах")
     @allure.description(
-        "Check that route options block appears under the address input fields "
-        "when two different preset addresses are entered"
+        "Проверка появления блока выбора маршрута под полями ввода адресов "
+        "при вводе двух разных предустановленных адресов"
     )
     def test_route_options_displayed_with_different_addresses(self, open_main_page):
-        """Test that route options are displayed after building a route with different addresses."""
+        """Тест отображения блока выбора маршрута после построения маршрута с разными адресами."""
         main_page = MainPage(open_main_page)
         route_page = RoutePage(open_main_page)
 
-        with allure.step("Build a route with two different preset addresses"):
+        with allure.step("Построить маршрут с двумя разными предустановленными адресами"):
             main_page.build_route(Addresses.FROM_ADDRESS, Addresses.TO_ADDRESS)
 
-        with allure.step("Verify route options block is displayed"):
+        with allure.step("Проверить отображение блока выбора маршрута"):
             assert route_page.is_route_options_displayed(), (
-                "Route options block should be displayed under address input fields"
+                "Блок выбора маршрута должен отображаться под полями ввода адресов"
             )
 
-    @allure.title("Scenario B: Verify route options displayed with same addresses")
+    @allure.title("Сценарий Б: Проверка отображения блока выбора маршрута при одинаковых адресах")
     @allure.description(
-        "Check that route options block is displayed when the same preset address "
-        "is entered in both From and To fields"
+        "Проверка отображения блока выбора маршрута при вводе одного и того же "
+        "предустановленного адреса в оба поля Откуда и Куда"
     )
     def test_route_options_displayed_with_same_addresses(self, open_main_page):
-        """Test that route options are displayed when same address is used."""
+        """Тест отображения блока выбора маршрута при одинаковых адресах."""
         main_page = MainPage(open_main_page)
         route_page = RoutePage(open_main_page)
 
-        with allure.step("Build a route with the same preset address in both fields"):
+        with allure.step("Построить маршрут с одинаковым адресом в обоих полях"):
             main_page.build_route(Addresses.FROM_ADDRESS, Addresses.FROM_ADDRESS)
 
-        with allure.step("Verify route options block is displayed"):
+        with allure.step("Проверить отображение блока выбора маршрута"):
             assert route_page.is_route_options_displayed(), (
-                "Route options block should be displayed even with same addresses"
+                "Блок выбора маршрута должен отображаться даже при одинаковых адресах"
             )
 
-    @allure.title("Scenario B: Verify same address route shows Auto type")
+    @allure.title("Сценарий Б: Проверка отображения типа маршрута Авто при одинаковых адресах")
     @allure.description(
-        "Check that when same address is used, the route type displays 'Auto'"
+        "Проверка отображения типа маршрута 'Авто' при одинаковых адресах"
     )
     def test_same_address_shows_auto_route_type(self, open_main_page):
-        """Test that same address route shows Auto as route type."""
+        """Тест отображения типа маршрута Авто при одинаковых адресах."""
         main_page = MainPage(open_main_page)
         route_page = RoutePage(open_main_page)
 
-        with allure.step("Build a route with the same preset address"):
+        with allure.step("Построить маршрут с одинаковым адресом"):
             main_page.build_route(Addresses.FROM_ADDRESS, Addresses.FROM_ADDRESS)
 
-        with allure.step("Verify route type shows 'Auto'"):
+        with allure.step("Проверить отображение типа маршрута 'Авто'"):
             route_type = route_page.get_route_type_text()
             assert ExpectedTexts.SAME_ADDRESS_ROUTE_TYPE in route_type, (
-                f"Expected route type to contain '{ExpectedTexts.SAME_ADDRESS_ROUTE_TYPE}', "
-                f"but got '{route_type}'"
+                f"Ожидался тип маршрута, содержащий '{ExpectedTexts.SAME_ADDRESS_ROUTE_TYPE}', "
+                f"получено '{route_type}'"
             )
 
-    @allure.title("Scenario B: Verify same address route shows Free cost")
+    @allure.title("Сценарий Б: Проверка отображения стоимости Бесплатно при одинаковых адресах")
     @allure.description(
-        "Check that when same address is used, the cost displays 'Free'"
+        "Проверка отображения стоимости 'Бесплатно' при одинаковых адресах"
     )
     def test_same_address_shows_free_cost(self, open_main_page):
-        """Test that same address route shows Free as cost."""
+        """Тест отображения стоимости Бесплатно при одинаковых адресах."""
         main_page = MainPage(open_main_page)
         route_page = RoutePage(open_main_page)
 
-        with allure.step("Build a route with the same preset address"):
+        with allure.step("Построить маршрут с одинаковым адресом"):
             main_page.build_route(Addresses.FROM_ADDRESS, Addresses.FROM_ADDRESS)
 
-        with allure.step("Verify cost shows 'Free'"):
+        with allure.step("Проверить отображение стоимости 'Бесплатно'"):
             cost = route_page.get_cost_text()
             assert ExpectedTexts.SAME_ADDRESS_COST in cost, (
-                f"Expected cost to contain '{ExpectedTexts.SAME_ADDRESS_COST}', "
-                f"but got '{cost}'"
+                f"Ожидалась стоимость, содержащая '{ExpectedTexts.SAME_ADDRESS_COST}', "
+                f"получено '{cost}'"
             )
 
-    @allure.title("Scenario B: Verify same address route shows zero travel time")
+    @allure.title("Сценарий Б: Проверка отображения нулевого времени в пути при одинаковых адресах")
     @allure.description(
-        "Check that when same address is used, the travel time displays '0 min'"
+        "Проверка отображения времени в пути '0 мин.' при одинаковых адресах"
     )
     def test_same_address_shows_zero_travel_time(self, open_main_page):
-        """Test that same address route shows 0 min travel time."""
+        """Тест отображения нулевого времени в пути при одинаковых адресах."""
         main_page = MainPage(open_main_page)
         route_page = RoutePage(open_main_page)
 
-        with allure.step("Build a route with the same preset address"):
+        with allure.step("Построить маршрут с одинаковым адресом"):
             main_page.build_route(Addresses.FROM_ADDRESS, Addresses.FROM_ADDRESS)
 
-        with allure.step("Verify travel time shows '0 min'"):
+        with allure.step("Проверить отображение времени '0 мин.'"):
             travel_time = route_page.get_route_travel_time()
             assert ExpectedTexts.SAME_ADDRESS_TRAVEL_TIME in travel_time, (
-                f"Expected travel time to contain '{ExpectedTexts.SAME_ADDRESS_TRAVEL_TIME}', "
-                f"but got '{travel_time}'"
+                f"Ожидалось время, содержащее '{ExpectedTexts.SAME_ADDRESS_TRAVEL_TIME}', "
+                f"получено '{travel_time}'"
             )
 
-    @allure.title("Scenario B: Verify same address complete block content")
+    @allure.title("Сценарий Б: Проверка полного содержимого блока при одинаковых адресах")
     @allure.description(
-        "Check that when same address is used, all expected text is displayed: "
-        "Auto, Free, Travel time: 0 min"
+        "Проверка отображения всего ожидаемого текста при одинаковых адресах: "
+        "Авто, Бесплатно, В пути 0 мин."
     )
     def test_same_address_complete_block_content(self, open_main_page):
-        """Test complete content verification for same address route."""
+        """Тест полной проверки содержимого для маршрута с одинаковыми адресами."""
         main_page = MainPage(open_main_page)
         route_page = RoutePage(open_main_page)
 
-        with allure.step("Build a route with the same preset address"):
+        with allure.step("Построить маршрут с одинаковым адресом"):
             main_page.build_route(Addresses.TO_ADDRESS, Addresses.TO_ADDRESS)
 
-        with allure.step("Verify route options block is displayed"):
+        with allure.step("Проверить отображение блока выбора маршрута"):
             assert route_page.is_route_options_displayed(), (
-                "Route options block should be displayed"
+                "Блок выбора маршрута должен отображаться"
             )
 
-        with allure.step("Verify all expected texts are present"):
+        with allure.step("Проверить наличие всех ожидаемых текстов"):
             route_type = route_page.get_route_type_text()
             cost = route_page.get_cost_text()
             travel_time = route_page.get_route_travel_time()
@@ -132,17 +133,17 @@ class TestRouteOptionsBlock:
             errors = []
             if ExpectedTexts.SAME_ADDRESS_ROUTE_TYPE not in route_type:
                 errors.append(
-                    f"Route type: expected '{ExpectedTexts.SAME_ADDRESS_ROUTE_TYPE}', "
-                    f"got '{route_type}'"
+                    f"Тип маршрута: ожидалось '{ExpectedTexts.SAME_ADDRESS_ROUTE_TYPE}', "
+                    f"получено '{route_type}'"
                 )
             if ExpectedTexts.SAME_ADDRESS_COST not in cost:
                 errors.append(
-                    f"Cost: expected '{ExpectedTexts.SAME_ADDRESS_COST}', got '{cost}'"
+                    f"Стоимость: ожидалось '{ExpectedTexts.SAME_ADDRESS_COST}', получено '{cost}'"
                 )
             if ExpectedTexts.SAME_ADDRESS_TRAVEL_TIME not in travel_time:
                 errors.append(
-                    f"Travel time: expected '{ExpectedTexts.SAME_ADDRESS_TRAVEL_TIME}', "
-                    f"got '{travel_time}'"
+                    f"Время в пути: ожидалось '{ExpectedTexts.SAME_ADDRESS_TRAVEL_TIME}', "
+                    f"получено '{travel_time}'"
                 )
 
             assert not errors, "\n".join(errors)

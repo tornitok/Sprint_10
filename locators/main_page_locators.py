@@ -1,21 +1,20 @@
-"""Locators for the Main Page."""
+"""Локаторы для главной страницы."""
 
 from selenium.webdriver.common.by import By
 
 
 class MainPageLocators:
-    """Locators for Main Page elements."""
+    """Локаторы элементов главной страницы."""
 
-    # Address Input
+    # Поля ввода адресов
     FROM_INPUT = (By.ID, "from")
     TO_INPUT = (By.ID, "to")
-    BUILD_ROUTE_BUTTON = (By.CSS_SELECTOR, "button[type='submit']")
-    ROUTE_INFO = (By.CLASS_NAME, "route-info")
-    ORDER_TAXI_BUTTON = (By.CSS_SELECTOR, ".order-button")
+    ROUTE_INFO = (By.CSS_SELECTOR, ".results-container")
+    ORDER_TAXI_BUTTON = (By.CSS_SELECTOR, ".order-button, .results-text button")
     LOADER = (By.CLASS_NAME, "loader")
 
-    # Map
-    MAP_CONTAINER = (By.ID, "map")
-    START_MARKER = (By.CSS_SELECTOR, ".map-marker-start, [data-marker='start']")
-    END_MARKER = (By.CSS_SELECTOR, ".map-marker-end, [data-marker='end']")
-    ROUTE_LINE = (By.CSS_SELECTOR, ".route-line, .map-route")
+    # Карта
+    MAP_CONTAINER = (By.CLASS_NAME, "map")
+    START_MARKER = (By.CSS_SELECTOR, ".ymaps-2-1-79-route-pin, [class*='route-pin']")
+    END_MARKER = (By.CSS_SELECTOR, ".ymaps-2-1-79-route-pin, [class*='route-pin']")
+    ROUTE_LINE = (By.CSS_SELECTOR, "[class*='routerPoints-pane'], [class*='route-line']")

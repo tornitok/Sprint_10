@@ -1,58 +1,69 @@
-"""Test data module containing addresses and other test constants."""
+"""Модуль тестовых данных с адресами и константами."""
 
 
 class Addresses:
-    """Preset addresses available in the application."""
+    """Предустановленные адреса приложения.
 
-    FROM_ADDRESS = "Хамовнический Вал, 34"
+    Согласно спецификации:
+    - Хамовнический вал, 34
+    - Зубовский бульвар, 37
+    """
+
+    FROM_ADDRESS = "Хамовнический вал, 34"
     TO_ADDRESS = "Зубовский бульвар, 37"
-
-    # Alternative English transliterations
-    FROM_ADDRESS_EN = "Hamovnicheskij Val, 34"
-    TO_ADDRESS_EN = "Zubovskij Boulevard, 37"
 
 
 class RouteTypes:
-    """Route type options."""
+    """Виды маршрутов."""
 
-    OPTIMAL = "Optimal"
-    FAST = "Fast"
-    CUSTOM = "Custom"
+    OPTIMAL = "Оптимальный"
+    FAST = "Быстрый"
+    CUSTOM = "Свой"
 
 
 class TransportTypes:
-    """Transport type options for Custom route."""
+    """Типы передвижения для маршрута Свой."""
 
-    CAR = "Car"
-    WALKING = "Walking"
-    TAXI = "Taxi"
-    BICYCLE = "Bicycle"
-    SCOOTER = "Scooter"
-    DRIVE = "Drive"
+    CAR = "Машина"
+    WALKING = "Пешком"
+    TAXI = "Такси"
+    BICYCLE = "Велосипед"
+    SCOOTER = "Самокат"
+    DRIVE = "Драйв"
 
 
 class TaxiFares:
-    """Taxi fare options."""
+    """Тарифы такси."""
 
-    BUSINESS = "Business"
-    SLEEPY = "Sleepy"
-    VACATION = "Vacation"
-    TALKATIVE = "Talkative"
-    COMFORTING = "Comforting"
-    GLOSSY = "Glossy"
+    BUSINESS = "Рабочий"
+    SLEEPY = "Сонный"
+    VACATION = "Отпускной"
+    TALKATIVE = "Разговорчивый"
+    COMFORTING = "Утешительный"
+    GLOSSY = "Глянцевый"
 
     ALL_FARES = [BUSINESS, SLEEPY, VACATION, TALKATIVE, COMFORTING, GLOSSY]
+    FARES_COUNT = 6
 
 
 class TaxiFareDescriptions:
-    """Taxi fare descriptions for tooltips."""
+    """Описания тарифов такси для всплывающих подсказок (русский UI).
 
-    BUSINESS = "For focused professionals"
-    SLEEPY = "For those who did not get enough sleep"
-    VACATION = "When it is time to relax"
-    TALKATIVE = "When thoughts need to be spoken"
-    COMFORTING = "When you want emotional support"
-    GLOSSY = "When you need to shine"
+    Согласно спецификации:
+    - Рабочий - Для деловых особ, которых отвлекают
+    - Сонный - Для тех, кто не выспался
+    - Отпускной - Если пришла пора отдохнуть
+    - Разговорчивый - Если мысли не выходят из головы
+    - Утешительный - Если хочется свернуться калачиком
+    - Глянцевый - Если нужно блистать
+    """
+
+    BUSINESS = "Для деловых особ, которых отвлекают"    # Рабочий
+    SLEEPY = "Для тех, кто не выспался"                 # Сонный
+    VACATION = "Если пришла пора отдохнуть"             # Отпускной
+    TALKATIVE = "Если мысли не выходят из головы"       # Разговорчивый
+    COMFORTING = "Если хочется свернуться калачиком"    # Утешительный
+    GLOSSY = "Если нужно блистать"                      # Глянцевый
 
     DESCRIPTIONS = {
         TaxiFares.BUSINESS: BUSINESS,
@@ -65,21 +76,33 @@ class TaxiFareDescriptions:
 
 
 class DriveFares:
-    """Drive fare options."""
+    """Тарифы Драйв."""
 
-    EVERYDAY = "Everyday"
-    OUTDOOR = "Outdoor"
-    LUXURY = "Luxury"
+    EVERYDAY = "Повседневный"
+    OUTDOOR = "Походный"
+    LUXURY = "Роскошный"
 
     ALL_FARES = [EVERYDAY, OUTDOOR, LUXURY]
 
 
 class DriveFareDescriptions:
-    """Drive fare descriptions."""
+    """Описания тарифов Драйв (как показано в секции превью).
 
-    EVERYDAY = "BMW 750, simple daily trips"
-    OUTDOOR = "KIA RIO, for traveling"
-    LUXURY = "PORSCHE 911, shine and power"
+    Согласно спецификации:
+    - Повседневный - BMW 750 Просто по делам, ничего лишнего
+    - Походный - KIA RIO Для путешествий
+    - Роскошный - PORSCHE 911 Блеск, мощь, глянец
+    """
+
+    # Описания на русском языке с сайта
+    EVERYDAY = "Просто по делам, ничего лишнего"
+    OUTDOOR = "Для путешествий"
+    LUXURY = "Блеск, мощь, глянец"
+
+    # Модели машин
+    EVERYDAY_CAR = "BMW 750"
+    OUTDOOR_CAR = "Kia Rio"
+    LUXURY_CAR = "Porsche 911"
 
     DESCRIPTIONS = {
         DriveFares.EVERYDAY: EVERYDAY,
@@ -89,45 +112,56 @@ class DriveFareDescriptions:
 
 
 class ExpectedTexts:
-    """Expected UI texts for assertions."""
+    """Ожидаемые тексты UI для проверок."""
 
+    # Сообщения о маршруте
     ROUTE_BUILT_MESSAGE = "Маршрут построен"
-    ORDER_TAXI_BUTTON = "Заказать такси"
-    CALL_TAXI_BUTTON = "Call Taxi"
-    BOOK_BUTTON = "Book"
-    SEARCHING_FOR_CAR = "Searching for a car"
-    CAR_BOOKED = "Car booked"
-    MINUTES_AND_ARRIVING = "minutes and arriving"
-    CANCEL_BUTTON = "Cancel"
-    DETAILS_BUTTON = "Details"
-    ADD_BUTTON = "Add"
-    ENTER_NUMBER_AND_ORDER = "Enter number and order"
 
-    # Same address route text
-    SAME_ADDRESS_ROUTE_TYPE = "Auto"
-    SAME_ADDRESS_COST = "Free"
-    SAME_ADDRESS_TRAVEL_TIME = "Travel time: 0 min"
+    # Кнопки
+    ORDER_TAXI_BUTTON = "Заказать такси"
+    CALL_TAXI_BUTTON = "Вызвать такси"
+    BOOK_BUTTON = "Забронировать"
+    CANCEL_BUTTON = "Отменить"
+    DETAILS_BUTTON = "Детали"
+    ADD_BUTTON = "Добавить"
+    ENTER_NUMBER_AND_ORDER = "Ввести номер и заказать"
+    ENTER_LICENSE_AND_BOOK = "Ввести права и забронировать"
+
+    # Окно поиска машины
+    SEARCHING_FOR_CAR = "Поиск машины"
+
+    # Окно совершенного заказа такси
+    MINUTES_AND_ARRIVING = "мин. и приедет"
+
+    # Окно совершенного заказа Драйв
+    CAR_BOOKED = "Машина забронирована"
+    FREE_WAITING = "Бесплатное ожидание"
+
+    # Текст маршрута для одинаковых адресов (русский UI)
+    SAME_ADDRESS_ROUTE_TYPE = "Авто"
+    SAME_ADDRESS_COST = "Бесплатно"
+    SAME_ADDRESS_TRAVEL_TIME = "В пути 0 мин."
 
 
 class OrderFormFields:
-    """Order form field labels."""
+    """Названия полей формы заказа."""
 
-    PHONE_NUMBER = "Phone number"
-    PAYMENT_METHOD = "Payment method"
-    COMMENT_FOR_DRIVER = "Comment for driver"
-    ORDER_REQUIREMENTS = "Order requirements"
+    PHONE_NUMBER = "Телефон"
+    PAYMENT_METHOD = "Способ оплаты"
+    COMMENT_FOR_DRIVER = "Комментарий водителю"
+    ORDER_REQUIREMENTS = "Требования к заказу"
 
 
 class DriverLicenseFields:
-    """Driver license form field labels."""
+    """Названия полей формы добавления прав."""
 
-    FIRST_NAME = "First name"
-    LAST_NAME = "Last name"
-    DATE_OF_BIRTH = "Date of birth"
-    LICENSE_NUMBER = "License number"
+    FIRST_NAME = "Имя"
+    LAST_NAME = "Фамилия"
+    DATE_OF_BIRTH = "Дата рождения"
+    LICENSE_NUMBER = "Номер"
 
 
 class Urls:
-    """Application URLs."""
+    """URL-адреса приложения."""
 
     BASE_URL = "https://ez-route.stand.praktikum-services.ru/"

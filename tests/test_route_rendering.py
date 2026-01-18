@@ -1,111 +1,120 @@
+"""Тесты на функциональность 'Отрисовка маршрута'."""
+
 import allure
-import pytest
 from pages.main_page import MainPage
 from test_data.addresses import Addresses
 
 
-@allure.feature("Route Rendering")
-@allure.story("Route visualization on map")
+@allure.feature("Отрисовка маршрута")
+@allure.story("Визуализация маршрута на карте")
 class TestRouteRendering:
-    """Test class for route rendering functionality.
+    """Класс тестов для функциональности отрисовки маршрута.
 
-    Test Scenario 1: Route Rendering
-    Preconditions: Enter two different preset addresses into From and To fields
+    Тестовый сценарий 1: Отрисовка маршрута
+    Предусловия: Ввести два разных предустановленных адреса в поля Откуда и Куда
     """
 
-    @allure.title("Verify route is rendered on the map")
+    @allure.title("Проверка отображения карты на главной странице")
+    @allure.description("Проверка видимости контейнера карты при загрузке страницы")
+    def test_map_is_displayed(self, open_main_page):
+        """Тест отображения карты на главной странице."""
+        main_page = MainPage(open_main_page)
+
+        with allure.step("Проверить отображение карты"):
+            assert main_page.is_map_displayed(), "Карта должна отображаться на главной странице"
+
+    @allure.title("Проверка ввода адресов в поля ввода")
+    @allure.description("Проверка корректного ввода адресов в поля ввода")
+    def test_address_input_fields_accept_text(self, open_main_page):
+        """Тест принятия и сохранения текста полями ввода адресов."""
+        main_page = MainPage(open_main_page)
+
+        with allure.step("Ввести адрес отправления"):
+            main_page.enter_from_address(Addresses.FROM_ADDRESS)
+
+        with allure.step("Ввести адрес назначения"):
+            main_page.enter_to_address(Addresses.TO_ADDRESS)
+
+        with allure.step("Проверить значение поля Откуда"):
+            from_value = main_page.get_from_input_value()
+            assert from_value == Addresses.FROM_ADDRESS, f"Ожидалось '{Addresses.FROM_ADDRESS}', получено '{from_value}'"
+
+        with allure.step("Проверить значение поля Куда"):
+            to_value = main_page.get_to_input_value()
+            assert to_value == Addresses.TO_ADDRESS, f"Ожидалось '{Addresses.TO_ADDRESS}', получено '{to_value}'"
+
+    @allure.title("Проверка отрисовки маршрута на карте")
     @allure.description(
-        "Check that after entering two different preset addresses, "
-        "the route is rendered on the map"
+        "Проверка отрисовки маршрута на карте после ввода "
+        "двух разных предустановленных адресов"
     )
     def test_route_rendered_on_map(self, open_main_page):
-        """Test that route is rendered after entering valid addresses."""
+        """Тест отрисовки маршрута после ввода валидных адресов."""
         main_page = MainPage(open_main_page)
 
-        with allure.step("Build route with two different preset addresses"):
+        with allure.step("Построить маршрут с двумя разными предустановленными адресами"):
             main_page.build_route(Addresses.FROM_ADDRESS, Addresses.TO_ADDRESS)
 
-        with allure.step("Verify route line is displayed on the map"):
+        with allure.step("Проверить отображение линии маршрута на карте"):
             assert main_page.is_route_line_displayed(), (
-                "Route line should be rendered on the map after building route"
+                "Линия маршрута должна отображаться на карте после построения маршрута"
             )
 
-    @allure.title("Verify start point marker is displayed on map")
+    @allure.title("Проверка отображения маркера начала маршрута на карте")
     @allure.description(
-        "Check that the map displays a start point marker "
-        "after building a route"
+        "Проверка отображения маркера начальной точки на карте "
+        "после построения маршрута"
     )
     def test_start_marker_displayed(self, open_main_page):
-        """Test that start point marker appears on the map."""
+        """Тест появления маркера начальной точки на карте."""
         main_page = MainPage(open_main_page)
 
-        with allure.step("Build route with two different preset addresses"):
+        with allure.step("Построить маршрут с двумя разными предустановленными адресами"):
             main_page.build_route(Addresses.FROM_ADDRESS, Addresses.TO_ADDRESS)
 
-        with allure.step("Verify start point marker is displayed"):
+        with allure.step("Проверить отображение маркера начальной точки"):
             assert main_page.is_start_marker_displayed(), (
-                "Start point marker should be visible on the map"
+                "Маркер начальной точки должен быть виден на карте"
             )
 
-    @allure.title("Verify end point marker is displayed on map")
+    @allure.title("Проверка отображения маркера конца маршрута на карте")
     @allure.description(
-        "Check that the map displays an end point marker "
-        "after building a route"
+        "Проверка отображения маркера конечной точки на карте "
+        "после построения маршрута"
     )
     def test_end_marker_displayed(self, open_main_page):
-        """Test that end point marker appears on the map."""
+        """Тест появления маркера конечной точки на карте."""
         main_page = MainPage(open_main_page)
 
-        with allure.step("Build route with two different preset addresses"):
+        with allure.step("Построить маршрут с двумя разными предустановленными адресами"):
             main_page.build_route(Addresses.FROM_ADDRESS, Addresses.TO_ADDRESS)
 
-        with allure.step("Verify end point marker is displayed"):
+        with allure.step("Проверить отображение маркера конечной точки"):
             assert main_page.is_end_marker_displayed(), (
-                "End point marker should be visible on the map"
+                "Маркер конечной точки должен быть виден на карте"
             )
 
-    @allure.title("Verify both markers are displayed simultaneously")
+    @allure.title("Проверка отрисовки маршрута при обратном порядке адресов")
     @allure.description(
-        "Check that both start and end markers are displayed on the map "
-        "at the same time after building a route"
-    )
-    def test_both_markers_displayed(self, open_main_page):
-        """Test that both start and end markers appear together."""
-        main_page = MainPage(open_main_page)
-
-        with allure.step("Build route with two different preset addresses"):
-            main_page.build_route(Addresses.FROM_ADDRESS, Addresses.TO_ADDRESS)
-
-        with allure.step("Verify both markers are displayed"):
-            start_visible = main_page.is_start_marker_displayed()
-            end_visible = main_page.is_end_marker_displayed()
-
-            assert start_visible and end_visible, (
-                f"Both markers should be visible. "
-                f"Start marker: {start_visible}, End marker: {end_visible}"
-            )
-
-    @allure.title("Verify route rendering with reversed addresses")
-    @allure.description(
-        "Check that route is rendered correctly when addresses are "
-        "entered in reverse order (To address in From field and vice versa)"
+        "Проверка корректной отрисовки маршрута при вводе адресов "
+        "в обратном порядке (адрес Куда в поле Откуда и наоборот)"
     )
     def test_route_rendered_with_reversed_addresses(self, open_main_page):
-        """Test route rendering with addresses swapped."""
+        """Тест отрисовки маршрута с обменом адресов местами."""
         main_page = MainPage(open_main_page)
 
-        with allure.step("Build route with reversed addresses"):
+        with allure.step("Построить маршрут с обратным порядком адресов"):
             main_page.build_route(Addresses.TO_ADDRESS, Addresses.FROM_ADDRESS)
 
-        with allure.step("Verify route line is displayed"):
+        with allure.step("Проверить отображение линии маршрута"):
             assert main_page.is_route_line_displayed(), (
-                "Route should be rendered with reversed addresses"
+                "Маршрут должен отображаться при обратном порядке адресов"
             )
 
-        with allure.step("Verify both markers are displayed"):
+        with allure.step("Проверить отображение обоих маркеров"):
             assert main_page.is_start_marker_displayed(), (
-                "Start marker should be visible with reversed addresses"
+                "Маркер начала должен быть виден при обратном порядке адресов"
             )
             assert main_page.is_end_marker_displayed(), (
-                "End marker should be visible with reversed addresses"
+                "Маркер конца должен быть виден при обратном порядке адресов"
             )

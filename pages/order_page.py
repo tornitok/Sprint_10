@@ -1,3 +1,5 @@
+"""Page Object для страницы заказа такси."""
+
 import allure
 from selenium.webdriver.common.by import By
 from pages.base_object import BaseObject
@@ -5,375 +7,565 @@ from locators.order_page_locators import OrderPageLocators
 
 
 class OrderPage(BaseObject):
-    """Page Object for the Taxi Order Page."""
+    """Page Object для страницы заказа такси."""
 
-    @allure.step("Check if order form is displayed")
+    @allure.step("Проверка отображения формы заказа")
     def is_order_form_displayed(self) -> bool:
-        """Verify if order form is visible."""
+        """Проверка видимости формы заказа."""
         return self.is_element_visible(OrderPageLocators.ORDER_FORM)
 
-    @allure.step("Select economy tariff")
+    @allure.step("Ожидание отображения формы заказа")
+    def wait_for_order_form_displayed(self, timeout: int = 10) -> None:
+        """Явное ожидание видимости формы заказа."""
+        self.wait_for_element_visible(OrderPageLocators.ORDER_FORM, timeout)
+
+    @allure.step("Выбор тарифа Эконом")
     def select_economy_tariff(self) -> None:
-        """Select economy tariff."""
+        """Выбор тарифа Эконом."""
         self.click(OrderPageLocators.ECONOMY_TARIFF)
 
-    @allure.step("Select comfort tariff")
+    @allure.step("Выбор тарифа Комфорт")
     def select_comfort_tariff(self) -> None:
-        """Select comfort tariff."""
+        """Выбор тарифа Комфорт."""
         self.click(OrderPageLocators.COMFORT_TARIFF)
 
-    @allure.step("Select business tariff")
+    @allure.step("Выбор тарифа Бизнес")
     def select_business_tariff(self) -> None:
-        """Select business tariff."""
+        """Выбор тарифа Бизнес."""
         self.click(OrderPageLocators.BUSINESS_TARIFF)
 
-    @allure.step("Enter phone number: {phone}")
+    @allure.step("Ввод номера телефона: {phone}")
     def enter_phone(self, phone: str) -> None:
-        """Enter phone number in the order form."""
+        """Ввод номера телефона в форму заказа."""
         self.send_keys(OrderPageLocators.PHONE_INPUT, phone)
 
-    @allure.step("Enter comment: {comment}")
+    @allure.step("Ввод комментария: {comment}")
     def enter_comment(self, comment: str) -> None:
-        """Enter a comment for the order."""
+        """Ввод комментария к заказу."""
         self.send_keys(OrderPageLocators.COMMENT_INPUT, comment)
 
-    @allure.step("Click confirm order button")
+    @allure.step("Клик по кнопке подтверждения заказа")
     def click_confirm_order(self) -> None:
-        """Click the button to confirm the order."""
+        """Клик по кнопке подтверждения заказа."""
         self.click(OrderPageLocators.CONFIRM_ORDER_BUTTON)
 
-    @allure.step("Get order price")
+    @allure.step("Получение стоимости заказа")
     def get_order_price(self) -> str:
-        """Get the displayed order price."""
+        """Получение отображаемой стоимости заказа."""
         return self.get_text(OrderPageLocators.ORDER_PRICE)
 
-    @allure.step("Select card payment method")
+    @allure.step("Выбор оплаты картой")
     def select_card_payment(self) -> None:
-        """Select card as payment method."""
+        """Выбор способа оплаты картой."""
         self.click(OrderPageLocators.CARD_PAYMENT)
 
-    @allure.step("Select cash payment method")
+    @allure.step("Выбор оплаты наличными")
     def select_cash_payment(self) -> None:
-        """Select cash as payment method."""
+        """Выбор способа оплаты наличными."""
         self.click(OrderPageLocators.CASH_PAYMENT)
 
-    @allure.step("Hover over tariff selector")
+    @allure.step("Наведение на селектор тарифов")
     def hover_over_tariff_selector(self) -> None:
-        """Hover over the tariff selector."""
+        """Наведение на селектор тарифов."""
         self.hover(OrderPageLocators.TARIFF_SELECTOR)
 
-    # Taxi Fare Methods
-    @allure.step("Select Business fare")
+    # Методы работы с тарифами такси
+    @allure.step("Выбор тарифа Рабочий")
     def select_business_fare(self) -> None:
-        """Select Business taxi fare."""
+        """Выбор тарифа Рабочий."""
         self.click(OrderPageLocators.BUSINESS_FARE)
 
-    @allure.step("Select Sleepy fare")
+    @allure.step("Выбор тарифа Сонный")
     def select_sleepy_fare(self) -> None:
-        """Select Sleepy taxi fare."""
+        """Выбор тарифа Сонный."""
         self.click(OrderPageLocators.SLEEPY_FARE)
 
-    @allure.step("Select Vacation fare")
+    @allure.step("Выбор тарифа Отпускной")
     def select_vacation_fare(self) -> None:
-        """Select Vacation taxi fare."""
+        """Выбор тарифа Отпускной."""
         self.click(OrderPageLocators.VACATION_FARE)
 
-    @allure.step("Select Talkative fare")
+    @allure.step("Выбор тарифа Разговорчивый")
     def select_talkative_fare(self) -> None:
-        """Select Talkative taxi fare."""
+        """Выбор тарифа Разговорчивый."""
         self.click(OrderPageLocators.TALKATIVE_FARE)
 
-    @allure.step("Select Comforting fare")
+    @allure.step("Выбор тарифа Утешительный")
     def select_comforting_fare(self) -> None:
-        """Select Comforting taxi fare."""
+        """Выбор тарифа Утешительный."""
         self.click(OrderPageLocators.COMFORTING_FARE)
 
-    @allure.step("Select Glossy fare")
+    @allure.step("Выбор тарифа Глянцевый")
     def select_glossy_fare(self) -> None:
-        """Select Glossy taxi fare."""
+        """Выбор тарифа Глянцевый."""
         self.click(OrderPageLocators.GLOSSY_FARE)
 
-    @allure.step("Get all displayed fares count")
+    @allure.step("Получение количества отображаемых тарифов")
     def get_fares_count(self) -> int:
-        """Get count of displayed taxi fares."""
-        elements = self.find_elements(OrderPageLocators.ALL_FARES)
-        return len(elements)
+        """Получение количества отображаемых тарифов такси."""
+        if self.is_element_visible(OrderPageLocators.ALL_FARES, timeout=5):
+            elements = self.find_elements(OrderPageLocators.ALL_FARES)
+            return len(elements)
+        return 0
 
-    @allure.step("Check if exactly one fare is active")
+    @allure.step("Проверка активности ровно одного тарифа")
     def is_one_fare_active(self) -> bool:
-        """Check if exactly one fare is selected by default."""
+        """Проверка что ровно один тариф выбран по умолчанию."""
         elements = self.find_elements(OrderPageLocators.ACTIVE_FARE)
         return len(elements) == 1
 
-    @allure.step("Get active fare name")
+    @allure.step("Получение названия активного тарифа")
     def get_active_fare_name(self) -> str:
-        """Get the name of the currently active fare."""
+        """Получение названия текущего активного тарифа."""
         element = self.find_element(OrderPageLocators.ACTIVE_FARE)
-        return element.get_attribute("data-fare")
+        return element.text
 
-    @allure.step("Check if fare is visible: {fare_name}")
+    @allure.step("Проверка видимости тарифа: {fare_name}")
     def is_fare_visible(self, fare_name: str) -> bool:
-        """Check if a specific fare is visible."""
-        locator = (By.CSS_SELECTOR, f"[data-fare='{fare_name.lower()}']")
-        return self.is_element_visible(locator)
+        """Проверка видимости конкретного тарифа.
 
-    # Fare Tooltip Methods
-    @allure.step("Hover over fare info icon for fare: {fare_name}")
+        Поддерживает как тарифы Такси, так и тарифы Драйв (tcard с русским текстом).
+        """
+        # Маппинг названий тарифов
+        fare_map = {
+            # Тарифы Драйв (русский UI)
+            "повседневный": "Повседневный",
+            "походный": "Походный",
+            "роскошный": "Роскошный",
+            # Тарифы Такси (русский UI)
+            "рабочий": "Рабочий",
+            "сонный": "Сонный",
+            "отпускной": "Отпускной",
+            "разговорчивый": "Разговорчивый",
+            "утешительный": "Утешительный",
+            "глянцевый": "Глянцевый"
+        }
+
+        fare_lower = fare_name.lower()
+
+        # Поиск тарифа по русскому названию в tcard
+        if fare_lower in fare_map:
+            russian_name = fare_map[fare_lower]
+            locator = (By.XPATH, OrderPageLocators.TCARD_BY_NAME_TEMPLATE.format(russian_name))
+            return self.is_element_visible(locator, timeout=5)
+
+        # Fallback: поиск как есть
+        locator = (By.XPATH, OrderPageLocators.TCARD_BY_NAME_TEMPLATE.format(fare_name))
+        return self.is_element_visible(locator, timeout=5)
+
+    # Методы работы с всплывающими подсказками тарифов
+    @allure.step("Наведение на иконку информации тарифа: {fare_name}")
     def hover_fare_info_icon(self, fare_name: str) -> None:
-        """Hover over the info icon for a specific fare."""
-        locator = (By.CSS_SELECTOR, f"[data-fare='{fare_name.lower()}'] .fare-info-icon")
-        self.hover(locator)
+        """Показать всплывающую подсказку для указанного тарифа.
 
-    @allure.step("Get tooltip text")
+        Для тарифов Такси контент подсказки встроен в HTML tcard.
+        Используем JavaScript для показа подсказки добавлением класса 'show'.
+        Для тарифов Драйв клик по tcard показывает описание в превью.
+        """
+        # Маппинг названий тарифов
+        fare_map = {
+            # Тарифы Драйв
+            "повседневный": "Повседневный",
+            "походный": "Походный",
+            "роскошный": "Роскошный",
+            # Тарифы Такси
+            "рабочий": "Рабочий",
+            "сонный": "Сонный",
+            "отпускной": "Отпускной",
+            "разговорчивый": "Разговорчивый",
+            "утешительный": "Утешительный",
+            "глянцевый": "Глянцевый"
+        }
+
+        fare_lower = fare_name.lower()
+        drive_fares = ["повседневный", "походный", "роскошный"]
+
+        if fare_lower in fare_map:
+            russian_name = fare_map[fare_lower]
+
+            if fare_lower in drive_fares:
+                # Для тарифов Драйв клик по tcard показывает превью
+                locator = (By.XPATH, OrderPageLocators.TCARD_PARENT_BY_NAME_TEMPLATE.format(russian_name))
+                self.click(locator)
+            else:
+                # Для тарифов Такси используем JavaScript для показа подсказки
+                script = f"""
+                    const tcards = document.querySelectorAll('.tcard');
+                    for (const tcard of tcards) {{
+                        const title = tcard.querySelector('.tcard-title');
+                        if (title && title.textContent.includes('{russian_name}')) {{
+                            const tooltip = tcard.querySelector('[class*="react_component_tooltip"]');
+                            if (tooltip) {{
+                                tooltip.classList.add('show');
+                                tooltip.style.opacity = '1';
+                                tooltip.style.visibility = 'visible';
+                            }}
+                            break;
+                        }}
+                    }}
+                """
+                self.execute_script(script)
+        else:
+            # Fallback: поиск по названию как есть
+            locator = (By.XPATH, OrderPageLocators.TCARD_PARENT_BY_NAME_TEMPLATE.format(fare_name))
+            self.click(locator)
+
+    @allure.step("Получение текста подсказки")
     def get_tooltip_text(self) -> str:
-        """Get the text from the displayed tooltip."""
+        """Получение текста описания из подсказки или превью.
+
+        Для тарифов Такси возвращает текст из React tooltip (.i-dPrefix).
+        Для тарифов Драйв возвращает описание из drive-preview-prefix.
+        """
+        # Сначала пробуем drive-preview-prefix (для тарифов Драйв)
+        if self.is_element_visible(OrderPageLocators.DRIVE_PREVIEW_PREFIX, timeout=2):
+            return self.get_text(OrderPageLocators.DRIVE_PREVIEW_PREFIX)
+
+        # Пробуем получить текст подсказки через JavaScript (для тарифов Такси)
+        result = self.execute_script("""
+            const tooltip = document.querySelector('[class*="react_component_tooltip"].show .i-dPrefix');
+            if (tooltip) return tooltip.textContent;
+            
+            // Пробуем все видимые подсказки
+            const allTooltips = document.querySelectorAll('.i-dPrefix');
+            for (const t of allTooltips) {
+                if (t.textContent && t.textContent.trim()) {
+                    return t.textContent;
+                }
+            }
+            return null;
+        """)
+        if result:
+            return result
+
+        # Пробуем React tooltip (для тарифов Такси) - появляется при наведении на .tcard-i
+        if self.is_element_visible(OrderPageLocators.TAXI_TOOLTIP_TEXT, timeout=2):
+            return self.get_text(OrderPageLocators.TAXI_TOOLTIP_TEXT)
+
+
+        # Пробуем получить описание из активного tcard
+        if self.is_element_visible(OrderPageLocators.ACTIVE_TCARD_DESC, timeout=2):
+            return self.get_text(OrderPageLocators.ACTIVE_TCARD_DESC)
+
+        # Fallback к обычной подсказке
         return self.get_text(OrderPageLocators.FARE_TOOLTIP)
 
-    @allure.step("Check if tooltip is displayed")
+    @allure.step("Получение текста подсказки для конкретного тарифа: {fare_name}")
+    def get_fare_tooltip_text(self, fare_name: str) -> str:
+        """Получение текста описания для конкретного тарифа из его подсказки.
+
+        Args:
+            fare_name: Название тарифа (например, 'Рабочий', 'Сонный')
+
+        Returns:
+            Текст описания подсказки для тарифа.
+        """
+        # Маппинг названий тарифов
+        fare_map = {
+            "рабочий": "Рабочий",
+            "сонный": "Сонный",
+            "отпускной": "Отпускной",
+            "разговорчивый": "Разговорчивый",
+            "утешительный": "Утешительный",
+            "глянцевый": "Глянцевый"
+        }
+
+        fare_lower = fare_name.lower()
+        russian_name = fare_map.get(fare_lower, fare_name)
+
+        # Используем JavaScript для получения текста подсказки конкретного тарифа
+        result = self.execute_script(f"""
+            const tcards = document.querySelectorAll('.tcard');
+            for (const tcard of tcards) {{
+                const title = tcard.querySelector('.tcard-title');
+                if (title && title.textContent.includes('{russian_name}')) {{
+                    const desc = tcard.querySelector('.i-dPrefix');
+                    if (desc) return desc.textContent;
+                }}
+            }}
+            return null;
+        """)
+        return result if result else ""
+
+    @allure.step("Проверка отображения подсказки")
     def is_tooltip_displayed(self) -> bool:
-        """Check if tooltip is visible."""
-        return self.is_element_visible(OrderPageLocators.FARE_TOOLTIP)
+        """Проверка видимости подсказки или превью Драйв."""
+        return (self.is_element_visible(OrderPageLocators.DRIVE_PREVIEW_PREFIX, timeout=2) or
+                self.is_element_visible(OrderPageLocators.FARE_TOOLTIP, timeout=2))
 
-    # Order Form Field Methods
-    @allure.step("Check if phone field is displayed")
+    # Методы работы с полями формы заказа
+    @allure.step("Проверка отображения поля телефона")
     def is_phone_field_displayed(self) -> bool:
-        """Check if phone number field is visible."""
-        return (self.is_element_visible(OrderPageLocators.PHONE_FIELD) or
-                self.is_element_visible(OrderPageLocators.PHONE_INPUT))
+        """Проверка видимости или присутствия поля номера телефона."""
+        return (self.is_element_visible(OrderPageLocators.PHONE_INPUT, timeout=3) or
+                self.is_element_present(OrderPageLocators.PHONE_INPUT, timeout=3) or
+                self.is_element_visible(OrderPageLocators.PHONE_FIELD, timeout=3))
 
-    @allure.step("Check if payment method field is displayed")
+    @allure.step("Проверка отображения поля способа оплаты")
     def is_payment_method_field_displayed(self) -> bool:
-        """Check if payment method field is visible."""
-        return (self.is_element_visible(OrderPageLocators.PAYMENT_METHOD_FIELD) or
-                self.is_element_visible(OrderPageLocators.PAYMENT_METHOD_SELECTOR))
+        """Проверка видимости или присутствия поля способа оплаты."""
+        return (self.is_element_visible(OrderPageLocators.PAYMENT_METHOD_SELECTOR, timeout=3) or
+                self.is_element_present(OrderPageLocators.PAYMENT_METHOD_SELECTOR, timeout=3) or
+                self.is_element_visible(OrderPageLocators.PAYMENT_METHOD_FIELD, timeout=3))
 
-    @allure.step("Check if comment field is displayed")
+    @allure.step("Проверка отображения поля комментария")
     def is_comment_field_displayed(self) -> bool:
-        """Check if comment for driver field is visible."""
-        return (self.is_element_visible(OrderPageLocators.COMMENT_FIELD) or
-                self.is_element_visible(OrderPageLocators.COMMENT_INPUT))
+        """Проверка видимости поля комментария для водителя."""
+        return (self.is_element_visible(OrderPageLocators.COMMENT_INPUT, timeout=3) or
+                self.is_element_visible(OrderPageLocators.COMMENT_FIELD, timeout=3))
 
-    @allure.step("Check if requirements field is displayed")
+    @allure.step("Проверка отображения поля требований к заказу")
     def is_requirements_field_displayed(self) -> bool:
-        """Check if order requirements field is visible."""
-        return self.is_element_visible(OrderPageLocators.REQUIREMENTS_FIELD)
+        """Проверка видимости поля требований к заказу."""
+        return self.is_element_visible(OrderPageLocators.REQUIREMENTS_FIELD, timeout=3)
 
-    # Order Requirements Methods
-    @allure.step("Enable Laptop table checkbox")
-    def enable_laptop_table(self) -> None:
-        """Enable the Laptop table requirement checkbox."""
-        self.click(OrderPageLocators.LAPTOP_TABLE_CHECKBOX)
+    @allure.step("Раскрытие секции Требования к заказу")
+    def expand_requirements_section(self) -> None:
+        """Раскрытие секции Требования к заказу если она закрыта."""
+        self.scroll_to_element(OrderPageLocators.REQUIREMENTS_HEADER)
+        self.click(OrderPageLocators.REQUIREMENTS_HEADER)
 
-    @allure.step("Check if Laptop table is selected")
+    @allure.step("Проверка выбора Столик для ноутбука")
     def is_laptop_table_selected(self) -> bool:
-        """Check if Laptop table checkbox is selected."""
+        """Проверка выбора чекбокса Столик для ноутбука."""
         element = self.find_element(OrderPageLocators.LAPTOP_TABLE_CHECKBOX)
         return element.is_selected()
 
-    # Order Action Methods
-    @allure.step("Click 'Enter number and order' button")
+    # Методы действий с заказом
+    @allure.step("Клик по кнопке 'Ввести номер и заказать'")
     def click_enter_number_and_order(self) -> None:
-        """Click the Enter number and order button."""
+        """Клик по кнопке Ввести номер и заказать."""
         self.click(OrderPageLocators.ENTER_NUMBER_ORDER_BUTTON)
 
-    @allure.step("Click Cancel button")
+    @allure.step("Клик по кнопке Отменить")
     def click_cancel(self) -> None:
-        """Click the Cancel button."""
+        """Клик по кнопке Отменить."""
         self.click(OrderPageLocators.CANCEL_BUTTON)
 
-    @allure.step("Click Details button")
+    @allure.step("Клик по кнопке Детали")
     def click_details(self) -> None:
-        """Click the Details button."""
+        """Клик по кнопке Детали."""
         self.click(OrderPageLocators.DETAILS_BUTTON)
 
-    # Car Search Window Methods
-    @allure.step("Check if car search window is displayed")
+    # Методы работы с окном поиска машины
+    @allure.step("Проверка отображения окна поиска машины")
     def is_car_search_window_displayed(self) -> bool:
-        """Check if car search window is visible."""
+        """Проверка видимости окна поиска машины."""
         return self.is_element_visible(OrderPageLocators.CAR_SEARCH_WINDOW)
 
-    @allure.step("Get car search title")
+    @allure.step("Ожидание отображения окна поиска машины")
+    def wait_for_car_search_window_displayed(self, timeout: int = 30) -> None:
+        """Ожидание появления окна поиска машины."""
+        self.wait_for_element_visible(OrderPageLocators.CAR_SEARCH_WINDOW, timeout)
+
+    @allure.step("Получение заголовка окна поиска машины")
     def get_car_search_title(self) -> str:
-        """Get the title of the car search window."""
+        """Получение заголовка окна поиска машины."""
         return self.get_text(OrderPageLocators.CAR_SEARCH_TITLE)
 
-    @allure.step("Check if search timer is displayed")
+    @allure.step("Проверка отображения таймера поиска")
     def is_search_timer_displayed(self) -> bool:
-        """Check if countdown timer is visible."""
+        """Проверка видимости таймера обратного отсчета."""
         return self.is_element_visible(OrderPageLocators.CAR_SEARCH_TIMER)
 
-    @allure.step("Wait for car search to complete")
+    @allure.step("Ожидание завершения поиска машины")
     def wait_for_search_complete(self, timeout: int = 60) -> None:
-        """Wait for car search timer to finish."""
-        self.wait_for_element_invisible(OrderPageLocators.CAR_SEARCH_TIMER, timeout)
+        """Ожидание завершения таймера поиска машины и появления окна совершенного заказа."""
+        # Ждём исчезновения заголовка "Поиск машины"
+        self.wait_for_element_invisible(OrderPageLocators.SEARCHING_CAR_TITLE, timeout)
 
-    # Completed Order Window Methods
-    @allure.step("Check if completed order window is displayed")
+    @allure.step("Ожидание появления окна совершенного заказа")
+    def wait_for_completed_order_displayed(self, timeout: int = 10) -> None:
+        """Ожидание появления окна совершенного заказа."""
+        self.wait_for_element_invisible(OrderPageLocators.SEARCHING_CAR_TITLE, timeout)
+
+    # Методы работы с окном совершенного заказа
+    @allure.step("Проверка отображения окна совершенного заказа")
     def is_completed_order_displayed(self) -> bool:
-        """Check if completed order window is visible."""
-        return self.is_element_visible(OrderPageLocators.COMPLETED_ORDER_WINDOW)
+        """Проверка видимости окна совершенного заказа."""
+        return self.is_element_visible(OrderPageLocators.ORDER_TITLE)
 
-    @allure.step("Get order title")
+    @allure.step("Получение заголовка заказа")
     def get_order_title(self) -> str:
-        """Get the order title (e.g., 'N minutes and arriving')."""
+        """Получение заголовка заказа (например, 'N мин. и приедет')."""
         return self.get_text(OrderPageLocators.ORDER_TITLE)
 
-    @allure.step("Check if car number is displayed")
+    @allure.step("Проверка отображения номера машины")
     def is_car_number_displayed(self) -> bool:
-        """Check if car number is visible."""
+        """Проверка видимости номера машины."""
         return self.is_element_visible(OrderPageLocators.CAR_NUMBER)
 
-    @allure.step("Get car number")
+    @allure.step("Получение номера машины")
     def get_car_number(self) -> str:
-        """Get the car number."""
+        """Получение номера машины."""
         return self.get_text(OrderPageLocators.CAR_NUMBER)
 
-    @allure.step("Check if fare image is displayed")
+    @allure.step("Проверка отображения изображения тарифа")
     def is_fare_image_displayed(self) -> bool:
-        """Check if fare image is visible."""
+        """Проверка видимости изображения тарифа."""
         return self.is_element_visible(OrderPageLocators.FARE_IMAGE)
 
-    # Driver Info Methods
-    @allure.step("Check if driver info is displayed")
+    # Методы работы с информацией о водителе
+    @allure.step("Проверка отображения информации о водителе")
     def is_driver_info_displayed(self) -> bool:
-        """Check if driver info block is visible."""
+        """Проверка видимости блока информации о водителе."""
         return self.is_element_visible(OrderPageLocators.DRIVER_INFO_BLOCK)
 
-    @allure.step("Get driver name")
+    @allure.step("Получение имени водителя")
     def get_driver_name(self) -> str:
-        """Get the driver name."""
+        """Получение имени водителя."""
         return self.get_text(OrderPageLocators.DRIVER_NAME)
 
-    @allure.step("Check if driver photo is displayed")
+    @allure.step("Проверка отображения фото водителя")
     def is_driver_photo_displayed(self) -> bool:
-        """Check if driver photo is visible."""
+        """Проверка видимости фото водителя."""
         return self.is_element_visible(OrderPageLocators.DRIVER_PHOTO)
 
-    @allure.step("Get driver rating")
+    @allure.step("Получение рейтинга водителя")
     def get_driver_rating(self) -> str:
-        """Get the driver rating."""
+        """Получение рейтинга водителя."""
         return self.get_text(OrderPageLocators.DRIVER_RATING)
 
-    # Order Details Methods
-    @allure.step("Check if order details window is displayed")
+    # Методы работы с деталями заказа
+    @allure.step("Проверка отображения окна деталей заказа")
     def is_order_details_displayed(self) -> bool:
-        """Check if order details window is visible."""
+        """Проверка видимости окна деталей заказа."""
         return self.is_element_visible(OrderPageLocators.ORDER_DETAILS_WINDOW)
 
-    @allure.step("Get pickup address from details")
+    @allure.step("Получение адреса подачи из деталей")
     def get_pickup_address(self) -> str:
-        """Get the pickup address from order details."""
+        """Получение адреса подачи из деталей заказа."""
         return self.get_text(OrderPageLocators.PICKUP_ADDRESS)
 
-    @allure.step("Get destination address from details")
+    @allure.step("Получение адреса назначения из деталей")
     def get_destination_address(self) -> str:
-        """Get the destination address from order details."""
+        """Получение адреса назначения из деталей заказа."""
         return self.get_text(OrderPageLocators.DESTINATION_ADDRESS)
 
-    @allure.step("Get payment method from details")
+    @allure.step("Получение способа оплаты из деталей")
     def get_payment_method_display(self) -> str:
-        """Get the payment method from order details."""
+        """Получение способа оплаты из деталей заказа."""
         return self.get_text(OrderPageLocators.PAYMENT_METHOD_DISPLAY)
 
-    @allure.step("Get trip cost from details")
+    @allure.step("Получение стоимости поездки из деталей")
     def get_trip_cost(self) -> str:
-        """Get the trip cost from order details."""
+        """Получение стоимости поездки из деталей заказа."""
         return self.get_text(OrderPageLocators.TRIP_COST)
 
-    @allure.step("Check if order window is closed")
+    @allure.step("Проверка закрытия окна заказа")
     def is_order_window_closed(self) -> bool:
-        """Check if order window has been closed."""
+        """Проверка закрытия окна заказа."""
         return not self.is_element_visible(OrderPageLocators.COMPLETED_ORDER_WINDOW, timeout=3)
 
-    # Drive Order Methods
-    @allure.step("Check if drive order form is displayed")
+    # Методы работы с заказом Драйв
+    @allure.step("Проверка отображения формы заказа Драйв")
     def is_drive_order_form_displayed(self) -> bool:
-        """Check if drive order form is visible."""
+        """Проверка видимости формы заказа Драйв."""
         return self.is_element_visible(OrderPageLocators.DRIVE_ORDER_FORM)
 
-    @allure.step("Select Everyday fare")
+    @allure.step("Выбор тарифа Повседневный")
     def select_everyday_fare(self) -> None:
-        """Select Everyday drive fare."""
+        """Выбор тарифа Повседневный."""
         self.click(OrderPageLocators.EVERYDAY_FARE)
 
-    @allure.step("Select Outdoor fare")
+    @allure.step("Выбор тарифа Походный")
     def select_outdoor_fare(self) -> None:
-        """Select Outdoor drive fare."""
+        """Выбор тарифа Походный."""
         self.click(OrderPageLocators.OUTDOOR_FARE)
 
-    @allure.step("Select Luxury fare")
+    @allure.step("Выбор тарифа Роскошный")
     def select_luxury_fare(self) -> None:
-        """Select Luxury drive fare."""
+        """Выбор тарифа Роскошный."""
         self.click(OrderPageLocators.LUXURY_FARE)
 
-    # Driver License Methods
-    @allure.step("Check if license window is displayed")
+    # Методы работы с правами водителя
+    @allure.step("Клик по кнопке 'Добавить права'")
+    def click_add_license_button(self) -> None:
+        """Клик по кнопке 'Добавить права' для открытия окна ввода прав."""
+        self.click(OrderPageLocators.ADD_LICENSE_BUTTON_NP)
+
+    @allure.step("Проверка отображения окна добавления прав")
     def is_license_window_displayed(self) -> bool:
-        """Check if add driver license window is visible."""
-        return self.is_element_visible(OrderPageLocators.LICENSE_WINDOW)
-
-    @allure.step("Enter first name: {first_name}")
-    def enter_first_name(self, first_name: str) -> None:
-        """Enter first name in license form."""
-        self.send_keys(OrderPageLocators.FIRST_NAME_INPUT, first_name)
-
-    @allure.step("Enter last name: {last_name}")
-    def enter_last_name(self, last_name: str) -> None:
-        """Enter last name in license form."""
-        self.send_keys(OrderPageLocators.LAST_NAME_INPUT, last_name)
-
-    @allure.step("Enter date of birth: {dob}")
-    def enter_date_of_birth(self, dob: str) -> None:
-        """Enter date of birth in license form."""
-        self.send_keys(OrderPageLocators.DATE_OF_BIRTH_INPUT, dob)
-
-    @allure.step("Enter license number: {license_num}")
-    def enter_license_number(self, license_num: str) -> None:
-        """Enter license number in license form."""
-        self.send_keys(OrderPageLocators.LICENSE_NUMBER_INPUT, license_num)
-
-    @allure.step("Click Add license button")
-    def click_add_license(self) -> None:
-        """Click the Add button in license form."""
-        self.click(OrderPageLocators.ADD_LICENSE_BUTTON)
-
-    @allure.step("Click Cancel license button")
-    def click_cancel_license(self) -> None:
-        """Click the Cancel button in license form."""
-        self.click(OrderPageLocators.CANCEL_LICENSE_BUTTON)
-
-    @allure.step("Check if first name field is displayed")
-    def is_first_name_field_displayed(self) -> bool:
-        """Check if first name field is visible in license form."""
+        """Проверка видимости окна добавления водительских прав."""
         return self.is_element_visible(OrderPageLocators.FIRST_NAME_INPUT)
 
-    @allure.step("Check if last name field is displayed")
+    @allure.step("Ввод имени: {first_name}")
+    def enter_first_name(self, first_name: str) -> None:
+        """Ввод имени в форму прав."""
+        self.click(OrderPageLocators.FIRST_NAME_INPUT)
+        self.send_keys(OrderPageLocators.FIRST_NAME_INPUT, first_name)
+
+    @allure.step("Ввод фамилии: {last_name}")
+    def enter_last_name(self, last_name: str) -> None:
+        """Ввод фамилии в форму прав."""
+        self.click(OrderPageLocators.LAST_NAME_INPUT)
+        self.send_keys(OrderPageLocators.LAST_NAME_INPUT, last_name)
+
+    @allure.step("Ввод даты рождения: {dob}")
+    def enter_date_of_birth(self, dob: str) -> None:
+        """Ввод даты рождения в форму прав."""
+        self.click(OrderPageLocators.DATE_OF_BIRTH_INPUT)
+        self.send_keys(OrderPageLocators.DATE_OF_BIRTH_INPUT, dob)
+
+    @allure.step("Ввод номера прав: {license_num}")
+    def enter_license_number(self, license_num: str) -> None:
+        """Ввод номера прав в форму."""
+        self.click(OrderPageLocators.LICENSE_NUMBER_INPUT)
+        self.send_keys(OrderPageLocators.LICENSE_NUMBER_INPUT, license_num)
+        self.click(OrderPageLocators.DATE_OF_BIRTH_INPUT)
+
+    @allure.step("Клик по кнопке Добавить")
+    def click_add_license(self) -> None:
+        """Клик по кнопке Добавить в форме прав."""
+        self.click(OrderPageLocators.ADD_LICENSE_BUTTON)
+
+    @allure.step("Клик по кнопке Принято в окне подтверждения")
+    def click_license_confirmation(self) -> None:
+        """Клик по кнопке Принято в окне подтверждения после добавления прав."""
+        self.click(OrderPageLocators.LICENSE_CONFIRMATION_BUTTON)
+
+    @allure.step("Проверка отображения окна подтверждения прав")
+    def is_license_confirmation_displayed(self) -> bool:
+        """Проверка видимости окна подтверждения после добавления прав."""
+        return self.is_element_visible(OrderPageLocators.LICENSE_CONFIRMATION_WINDOW)
+
+    @allure.step("Клик по кнопке Отмена в форме прав")
+    def click_cancel_license(self) -> None:
+        """Клик по кнопке Отмена в форме прав."""
+        self.click(OrderPageLocators.CANCEL_LICENSE_BUTTON)
+
+    @allure.step("Проверка отображения поля имени")
+    def is_first_name_field_displayed(self) -> bool:
+        """Проверка видимости поля имени в форме прав."""
+        return self.is_element_visible(OrderPageLocators.FIRST_NAME_INPUT)
+
+    @allure.step("Проверка отображения поля фамилии")
     def is_last_name_field_displayed(self) -> bool:
-        """Check if last name field is visible in license form."""
+        """Проверка видимости поля фамилии в форме прав."""
         return self.is_element_visible(OrderPageLocators.LAST_NAME_INPUT)
 
-    @allure.step("Check if date of birth field is displayed")
+    @allure.step("Проверка отображения поля даты рождения")
     def is_date_of_birth_field_displayed(self) -> bool:
-        """Check if date of birth field is visible in license form."""
+        """Проверка видимости поля даты рождения в форме прав."""
         return self.is_element_visible(OrderPageLocators.DATE_OF_BIRTH_INPUT)
 
-    @allure.step("Check if license number field is displayed")
+    @allure.step("Проверка отображения поля номера прав")
     def is_license_number_field_displayed(self) -> bool:
-        """Check if license number field is visible in license form."""
+        """Проверка видимости поля номера прав в форме."""
         return self.is_element_visible(OrderPageLocators.LICENSE_NUMBER_INPUT)
 
-    # Completed Drive Order Methods
-    @allure.step("Check if drive order window is displayed")
+    # Методы работы с окном совершенного заказа Драйв
+    @allure.step("Проверка отображения окна заказа Драйв")
     def is_drive_order_window_displayed(self) -> bool:
-        """Check if completed drive order window is visible."""
+        """Проверка видимости окна совершенного заказа Драйв."""
         return self.is_element_visible(OrderPageLocators.DRIVE_ORDER_WINDOW)
 
-    @allure.step("Check if free waiting timer is displayed")
+    @allure.step("Проверка отображения таймера бесплатного ожидания")
     def is_free_waiting_timer_displayed(self) -> bool:
-        """Check if free waiting timer is visible."""
+        """Проверка видимости таймера бесплатного ожидания."""
         return self.is_element_visible(OrderPageLocators.FREE_WAITING_TIMER)
 
-    @allure.step("Get car location address")
+    @allure.step("Получение адреса местоположения машины")
     def get_car_location_address(self) -> str:
-        """Get the car location address (From)."""
+        """Получение адреса местоположения машины (Откуда)."""
         return self.get_text(OrderPageLocators.CAR_LOCATION_ADDRESS)

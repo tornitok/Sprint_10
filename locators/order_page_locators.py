@@ -1,97 +1,126 @@
-"""Locators for the Order Page."""
+"""Локаторы для страницы заказа."""
 
 from selenium.webdriver.common.by import By
 
 
 class OrderPageLocators:
-    """Locators for Order Page elements."""
+    """Локаторы элементов страницы заказа."""
 
-    # Order Form
-    ORDER_FORM = (By.CLASS_NAME, "order-form")
+    # Форма заказа
+    ORDER_FORM = (By.CSS_SELECTOR, ".tariff-picker.shown")
     TARIFF_SELECTOR = (By.CLASS_NAME, "tariff-selector")
     ORDER_PRICE = (By.CLASS_NAME, "order-price")
 
-    # Taxi Fares
-    FARE_SELECTOR = (By.CLASS_NAME, "fare-selector")
-    BUSINESS_FARE = (By.CSS_SELECTOR, "[data-fare='business']")
-    SLEEPY_FARE = (By.CSS_SELECTOR, "[data-fare='sleepy']")
-    VACATION_FARE = (By.CSS_SELECTOR, "[data-fare='vacation']")
-    TALKATIVE_FARE = (By.CSS_SELECTOR, "[data-fare='talkative']")
-    COMFORTING_FARE = (By.CSS_SELECTOR, "[data-fare='comforting']")
-    GLOSSY_FARE = (By.CSS_SELECTOR, "[data-fare='glossy']")
-    ACTIVE_FARE = (By.CSS_SELECTOR, ".fare-option.active, [data-fare].active")
-    ALL_FARES = (By.CSS_SELECTOR, "[data-fare]")
+    # Тарифы Такси (структура tcard с русским текстом)
+    FARE_SELECTOR = (By.CLASS_NAME, "tariff-cards")
+    BUSINESS_FARE = (By.XPATH, "//div[contains(@class, 'tcard') and .//div[contains(text(), 'Рабочий')]]")
+    SLEEPY_FARE = (By.XPATH, "//div[contains(@class, 'tcard') and .//div[contains(text(), 'Сонный')]]")
+    VACATION_FARE = (By.XPATH, "//div[contains(@class, 'tcard') and .//div[contains(text(), 'Отпускной')]]")
+    TALKATIVE_FARE = (By.XPATH, "//div[contains(@class, 'tcard') and .//div[contains(text(), 'Разговорчивый')]]")
+    COMFORTING_FARE = (By.XPATH, "//div[contains(@class, 'tcard') and .//div[contains(text(), 'Утешительный')]]")
+    GLOSSY_FARE = (By.XPATH, "//div[contains(@class, 'tcard') and .//div[contains(text(), 'Глянцевый')]]")
+    ACTIVE_FARE = (By.CSS_SELECTOR, ".tcard.active")
+    ALL_FARES = (By.CSS_SELECTOR, ".tcard")
 
-    # Fare Info Tooltip
+    # Всплывающие подсказки тарифов
     FARE_INFO_ICON = (By.CSS_SELECTOR, ".fare-info-icon, .info-icon")
     FARE_TOOLTIP = (By.CSS_SELECTOR, ".fare-tooltip, .tooltip")
 
-    # Legacy tariff locators for compatibility
+    # Устаревшие локаторы тарифов для совместимости
     ECONOMY_TARIFF = (By.CSS_SELECTOR, "[data-tariff='economy']")
     COMFORT_TARIFF = (By.CSS_SELECTOR, "[data-tariff='comfort']")
     BUSINESS_TARIFF = (By.CSS_SELECTOR, "[data-tariff='business']")
 
-    # Order Form Fields
+    # Поля формы заказа
     PHONE_INPUT = (By.ID, "phone")
-    PHONE_FIELD = (By.CSS_SELECTOR, ".phone-field, [data-field='phone']")
-    PAYMENT_METHOD_SELECTOR = (By.CLASS_NAME, "payment-method")
-    PAYMENT_METHOD_FIELD = (By.CSS_SELECTOR, ".payment-field, [data-field='payment']")
+    PHONE_FIELD = (By.CSS_SELECTOR, "#phone, .phone-field, [data-field='phone']")
+    PAYMENT_METHOD_SELECTOR = (By.CLASS_NAME, "payment-picker")
+    PAYMENT_METHOD_FIELD = (By.CSS_SELECTOR, ".payment-picker, .payment-field, [data-field='payment']")
     COMMENT_INPUT = (By.ID, "comment")
-    COMMENT_FIELD = (By.CSS_SELECTOR, ".comment-field, [data-field='comment']")
-    REQUIREMENTS_FIELD = (By.CSS_SELECTOR, ".requirements-field, [data-field='requirements']")
+    COMMENT_FIELD = (By.CSS_SELECTOR, "#comment, .comment-field, [data-field='comment']")
+    REQUIREMENTS_FIELD = (By.CSS_SELECTOR, ".reqs")
     CARD_PAYMENT = (By.CSS_SELECTOR, "[data-payment='card']")
     CASH_PAYMENT = (By.CSS_SELECTOR, "[data-payment='cash']")
 
-    # Order Requirements (Checkboxes)
-    LAPTOP_TABLE_CHECKBOX = (By.CSS_SELECTOR, "[data-requirement='laptop-table']")
+    # Требования к заказу (чекбоксы)
+    REQUIREMENTS_HEADER = (By.CSS_SELECTOR, ".reqs-header")
+    LAPTOP_TABLE_CHECKBOX = (By.CSS_SELECTOR, ".r-sw-container .switch-input")
 
-    # Buttons
+    # Кнопки
     CONFIRM_ORDER_BUTTON = (By.CSS_SELECTOR, ".confirm-order")
-    ENTER_NUMBER_ORDER_BUTTON = (By.CSS_SELECTOR, ".enter-number-order, [data-action='enter-number-order']")
-    CANCEL_BUTTON = (By.CSS_SELECTOR, ".cancel-button, [data-action='cancel']")
-    DETAILS_BUTTON = (By.CSS_SELECTOR, ".details-button, [data-action='details']")
+    ENTER_NUMBER_ORDER_BUTTON = (By.CSS_SELECTOR, "button.smart-button")
+    SMART_BUTTON_MAIN = (By.CSS_SELECTOR, ".smart-button-main")
+    CANCEL_BUTTON = (By.XPATH, "//div[@class='order-btn-group' and .//div[text()='Отменить']]//button")
+    DETAILS_BUTTON = (By.XPATH, "//div[@class='order-btn-group' and .//div[text()='Детали']]//button")
+    ADD_LICENSE_BUTTON_NP = (By.CSS_SELECTOR, ".np-button")
 
-    # Car Search Window
-    CAR_SEARCH_WINDOW = (By.CSS_SELECTOR, ".car-search-window, .search-modal")
-    CAR_SEARCH_TITLE = (By.CSS_SELECTOR, ".car-search-title, .search-title")
-    CAR_SEARCH_TIMER = (By.CSS_SELECTOR, ".search-timer, .countdown-timer")
+    # Окно поиска машины
+    CAR_SEARCH_WINDOW = (By.CSS_SELECTOR, ".order-body")
+    CAR_SEARCH_TITLE = (By.CSS_SELECTOR, ".order-header-title")
+    CAR_SEARCH_TIMER = (By.CSS_SELECTOR, ".order-header-time")
 
-    # Completed Order Window
-    COMPLETED_ORDER_WINDOW = (By.CSS_SELECTOR, ".completed-order-window, .order-complete")
-    ORDER_TITLE = (By.CSS_SELECTOR, ".order-title")
-    CAR_NUMBER = (By.CSS_SELECTOR, ".car-number")
-    FARE_IMAGE = (By.CSS_SELECTOR, ".fare-image")
+    # Окно совершенного заказа
+    COMPLETED_ORDER_WINDOW = (By.CSS_SELECTOR, ".order-body")
+    ORDER_TITLE = (By.CSS_SELECTOR, ".order-header-title")
+    CAR_NUMBER = (By.CSS_SELECTOR, ".order-number .number")
+    FARE_IMAGE = (By.CSS_SELECTOR, ".order-number img[alt='Car']")
 
-    # Driver Info
-    DRIVER_INFO_BLOCK = (By.CSS_SELECTOR, ".driver-info")
-    DRIVER_NAME = (By.CSS_SELECTOR, ".driver-name")
-    DRIVER_PHOTO = (By.CSS_SELECTOR, ".driver-photo")
-    DRIVER_RATING = (By.CSS_SELECTOR, ".driver-rating")
+    # Информация о водителе
+    DRIVER_INFO_BLOCK = (By.CSS_SELECTOR, ".order-btn-group .order-btn-rating")
+    DRIVER_NAME = (By.CSS_SELECTOR, ".order-buttons .order-btn-group div:last-child")
+    DRIVER_PHOTO = (By.CSS_SELECTOR, ".order-btn-group img[alt='close']")
+    DRIVER_RATING = (By.CSS_SELECTOR, ".order-btn-rating")
 
-    # Order Details
-    ORDER_DETAILS_WINDOW = (By.CSS_SELECTOR, ".order-details-window, .details-modal")
-    PICKUP_ADDRESS = (By.CSS_SELECTOR, ".pickup-address, .from-address")
-    DESTINATION_ADDRESS = (By.CSS_SELECTOR, ".destination-address, .to-address")
-    PAYMENT_METHOD_DISPLAY = (By.CSS_SELECTOR, ".payment-method-display")
-    MORE_ABOUT_TRIP = (By.CSS_SELECTOR, ".more-about-trip")
-    TRIP_COST = (By.CSS_SELECTOR, ".trip-cost, .order-cost")
+    # Детали заказа
+    ORDER_DETAILS_WINDOW = (By.CSS_SELECTOR, ".order-details")
+    PICKUP_ADDRESS = (By.XPATH, "//div[contains(@class, 'order-details-row')]//div[contains(text(), 'Адрес подачи')]/preceding-sibling::div[@class='o-d-h']")
+    DESTINATION_ADDRESS = (By.XPATH, "//div[contains(@class, 'order-details-row')]//div[contains(text(), 'Адрес назначения')]/preceding-sibling::div[@class='o-d-h']")
+    PAYMENT_METHOD_DISPLAY = (By.XPATH, "//div[contains(@class, 'order-details-row')]//div[contains(text(), 'Способ оплаты')]/preceding-sibling::div[@class='o-d-h']")
+    MORE_ABOUT_TRIP = (By.XPATH, "//div[contains(@class, 'order-details-row')]//div[contains(text(), 'Еще про поездку')]")
+    TRIP_COST = (By.XPATH, "//div[contains(@class, 'o-d-sh') and contains(text(), 'Стоимость')]")
 
-    # Drive Order
-    DRIVE_ORDER_FORM = (By.CSS_SELECTOR, ".drive-order-form")
-    EVERYDAY_FARE = (By.CSS_SELECTOR, "[data-drive-fare='everyday']")
-    OUTDOOR_FARE = (By.CSS_SELECTOR, "[data-drive-fare='outdoor']")
-    LUXURY_FARE = (By.CSS_SELECTOR, "[data-drive-fare='luxury']")
+    # Заказ Драйв
+    DRIVE_ORDER_FORM = (By.CSS_SELECTOR, ".tariff-picker.shown")
+    TARIFF_CARDS = (By.CSS_SELECTOR, ".tariff-cards")
+    EVERYDAY_FARE = (By.XPATH, "//div[contains(@class, 'tcard') and .//div[contains(text(), 'Повседневный')]]")
+    OUTDOOR_FARE = (By.XPATH, "//div[contains(@class, 'tcard') and .//div[contains(text(), 'Походный')]]")
+    LUXURY_FARE = (By.XPATH, "//div[contains(@class, 'tcard') and .//div[contains(text(), 'Роскошный')]]")
+    ACTIVE_TCARD = (By.CSS_SELECTOR, ".tcard.active")
+    ALL_TCARDS = (By.CSS_SELECTOR, ".tcard")
 
-    # Driver License Window
-    LICENSE_WINDOW = (By.CSS_SELECTOR, ".license-window, .add-license-modal")
-    FIRST_NAME_INPUT = (By.CSS_SELECTOR, "[data-field='first-name'], #first-name")
-    LAST_NAME_INPUT = (By.CSS_SELECTOR, "[data-field='last-name'], #last-name")
-    DATE_OF_BIRTH_INPUT = (By.CSS_SELECTOR, "[data-field='date-of-birth'], #date-of-birth")
-    LICENSE_NUMBER_INPUT = (By.CSS_SELECTOR, "[data-field='license-number'], #license-number")
-    ADD_LICENSE_BUTTON = (By.CSS_SELECTOR, ".add-license-button, [data-action='add-license']")
-    CANCEL_LICENSE_BUTTON = (By.CSS_SELECTOR, ".cancel-license-button")
+    # Превью Драйв
+    DRIVE_PREVIEW = (By.CSS_SELECTOR, ".drive-preview")
+    DRIVE_PREVIEW_TITLE = (By.CSS_SELECTOR, ".drive-preview-title")
+    DRIVE_PREVIEW_PREFIX = (By.CSS_SELECTOR, ".drive-preview-prefix")
 
-    # Completed Drive Order Window
-    DRIVE_ORDER_WINDOW = (By.CSS_SELECTOR, ".drive-order-complete")
-    FREE_WAITING_TIMER = (By.CSS_SELECTOR, ".free-waiting-timer")
-    CAR_LOCATION_ADDRESS = (By.CSS_SELECTOR, ".car-location-address")
+    # Окно добавления прав (секция становится видимой при нажатии smart-button)
+    LICENSE_WINDOW = (By.CSS_SELECTOR, ".section.active")
+    FIRST_NAME_INPUT = (By.ID, "firstName")
+    LAST_NAME_INPUT = (By.ID, "lastName")
+    DATE_OF_BIRTH_INPUT = (By.ID, "birthDate")
+    LICENSE_NUMBER_INPUT = (By.ID, "number")
+    # Кнопка Добавить в форме с полями ввода прав
+    ADD_LICENSE_BUTTON = (By.XPATH, "//div[contains(@class, 'section') and contains(@class, 'active') and .//input[@id='firstName']]//button[contains(@class, 'button') and contains(@class, 'full')]")
+    CANCEL_LICENSE_BUTTON = (By.CSS_SELECTOR, ".close-button.section-close")
+    # Окно подтверждения после добавления прав (содержит текст "Спасибо")
+    LICENSE_CONFIRMATION_WINDOW = (By.CSS_SELECTOR, ".section.active .head")
+    LICENSE_CONFIRMATION_BUTTON = (By.XPATH, "//div[contains(@class, 'section') and contains(@class, 'active') and .//div[contains(@class, 'head')]]//button[contains(@class, 'button') and contains(@class, 'full')]")
+
+    # Окно совершенного заказа Драйв
+    DRIVE_ORDER_WINDOW = (By.CSS_SELECTOR, ".order-body")
+    FREE_WAITING_TIMER = (By.CSS_SELECTOR, ".order-header-time")
+    FREE_WAITING_TITLE = (By.CSS_SELECTOR, ".order-header-title")
+    CAR_LOCATION_ADDRESS = (By.CSS_SELECTOR, ".o-d-h")
+
+    # Локаторы для динамического поиска тарифов
+    TCARD_BY_NAME_TEMPLATE = "//div[contains(@class, 'tcard')]//div[contains(text(), '{}')]"
+    TCARD_PARENT_BY_NAME_TEMPLATE = "//div[contains(@class, 'tcard')]//div[contains(text(), '{}')]/ancestor::div[contains(@class, 'tcard')]"
+
+    # Локаторы для всплывающих подсказок
+    TAXI_TOOLTIP_TEXT = (By.CSS_SELECTOR, ".i-dPrefix")
+    ACTIVE_TCARD_DESC = (By.CSS_SELECTOR, ".tcard.active .tcard-desc, .tcard.active .description")
+
+    # Локатор для ожидания завершения поиска машины
+    COMPLETED_ORDER_TITLE = (By.XPATH, "//div[contains(@class, 'order-header-title') and contains(text(), 'мин.') and contains(text(), 'приедет')]")
+    SEARCHING_CAR_TITLE = (By.XPATH, "//div[contains(@class, 'order-header-title') and contains(text(), 'Поиск машины')]")
+
